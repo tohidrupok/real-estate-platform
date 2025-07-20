@@ -1,0 +1,45 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<!-- Breadcumb -->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content text-center">
+            <h1 class="breadcumb-title">Delete Property</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>Delete Property</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Section -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-lg rounded-4">
+                    <div class="card-body p-5 text-center">
+                        <i class="fas fa-exclamation-triangle fa-3x text-danger mb-4"></i>
+                        <h3 class="text-danger mb-3">Are you sure?</h3>
+                        <p class="mb-4 fs-5">You are about to delete <strong>"{{ property.name }}"</strong>. This action cannot be undone.</p>
+                        
+                        <form method="post" class="d-flex justify-content-center gap-3">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger px-4 py-2 rounded-pill">
+                                <i class="fas fa-trash-alt me-2"></i> Yes, Delete
+                            </button>
+                            <a href="{% url 'property_detail' property.slug %}" class="btn btn-outline-secondary px-4 py-2 rounded-pill">
+                                Cancel
+                            </a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,138 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<!--==============================
+    Breadcumb
+==============================-->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content">
+            <h1 class="breadcumb-title">{{ form.instance.pk|yesno:"Update,Create" }} Team Member</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>Team Member Form</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% if form.errors %}
+<div class="container mt-4">
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+        {% for field in form %}
+            {% for error in field.errors %}
+                <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endif %}
+
+<!--==============================
+Form Area
+==============================-->
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2 class="mb-0">
+                        {% if form.instance.pk %}
+                            <i class="fas fa-user-edit"></i> Update
+                        {% else %}
+                            <i class="fas fa-user-plus"></i> Create
+                        {% endif %}
+                        Team Member
+                    </h2>
+                </div>
+
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            {{ form.name.label_tag }}
+                            {{ form.name }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.position.label_tag }}
+                            {{ form.position }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.photo.label_tag }}
+                            {{ form.photo }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.bio.label_tag }}
+                            {{ form.bio }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.facebook.label_tag }}
+                            {{ form.facebook }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.twitter.label_tag }}
+                            {{ form.twitter }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.linkedin.label_tag }}
+                            {{ form.linkedin }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.instagram.label_tag }}
+                            {{ form.instagram }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.contact_number.label_tag }}
+                            {{ form.contact_number }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.email.label_tag }}
+                            {{ form.email }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.years_of_experience.label_tag }}
+                            {{ form.years_of_experience }}
+                        </div>
+
+                        <div class="form-check mb-3">
+                            {{ form.is_active }}
+                            {{ form.is_active.label_tag }}
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'team_member_list' %}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Back to List
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Save
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

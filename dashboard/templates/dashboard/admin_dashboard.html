@@ -1,0 +1,154 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<style>
+    .card-glass {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 1.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .summary-card {
+        border-radius: 2rem;
+        padding: 2rem;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+    }
+
+    .summary-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .summary-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        display: inline-block;
+    }
+
+    .bg-gradient-success {
+        background: linear-gradient(135deg, #28a745, #6ed36e);
+        color: white;
+    }
+
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #007bff, #61a7f7);
+        color: white;
+    }
+</style>
+
+<!-- Breadcrumb Section -->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content text-center">
+            <h1 class="breadcumb-title">Admin Dashboard</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>Admin Dashboard</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Admin Dashboard Section -->
+<section class="bg-light py-5">
+    <div class="container">
+
+        <!-- Summary Cards -->
+        <div class="row g-4 mb-5 justify-content-center">
+            <div class="col-md-5 col-lg-4">
+                <div class="summary-card bg-gradient-success text-center">
+                    <div class="summary-icon">🏠</div>
+                    <h5>Total Properties</h5>
+                    <h2 class="fw-bold">{{ total_properties }}</h2>
+                </div>
+            </div>
+            <div class="col-md-5 col-lg-4">
+                <div class="summary-card bg-gradient-primary text-center">
+                    <div class="summary-icon">👨‍💼</div>
+                    <h5>Total Managers</h5>
+                    <h2 class="fw-bold">{{ total_managers }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Manager Form -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8">
+                <div class="card-glass p-5 shadow-lg">
+                    <h2 class="mb-4 text-primary text-center">👑 Welcome, Admin</h2>
+                    <p class="mb-4 text-muted text-center">Use this dashboard to create and manage managers.</p>
+
+                    <h5 class="text-dark mb-3 text-center">➕ Create New Manager</h5>
+
+                    <form method="post" class="mb-4">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <input type="text" name="username" class="form-control" placeholder="Manager Username" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success mt-4 w-100">Create Manager</button>
+                    </form>
+
+                    {% if success %}
+                        <div class="alert alert-success text-center">{{ success }}</div>
+                    {% endif %}
+                    {% if error %}
+                        <div class="alert alert-danger text-center">{{ error }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Manager List -->
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card-glass p-5 shadow-sm">
+                    <h4 class="mb-4 text-center text-dark">👥 Existing Managers</h4>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle text-center bg-white rounded-4">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for manager in managers %}
+                                <tr>
+                                    <td>{{ manager.username }}</td>
+                                    <td>
+                                        <form method="post" action="{% url 'delete_manager' manager.id %}" class="d-inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this manager?')">
+                                                🗑️ Delete
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="2" class="text-muted">No managers found.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <a href="{% url 'logout' %}" class="btn btn-outline-secondary">🔓 Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

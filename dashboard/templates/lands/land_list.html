@@ -1,0 +1,67 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<!--==============================
+    Breadcrumb
+==============================-->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content text-center">
+            <h1 class="breadcumb-title">Land Listings</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>Property List</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--==============================
+    Land Listings Section
+==============================-->
+<section class="bg-smoke py-5" data-bg-src="{% static 'assets/img/shape/error-shape-bg.png' %}">
+    <div class="container">
+        <div class="py-4">
+            <h2 class="mb-4 text-center">Available Land Listings</h2>
+
+            {% if lands %}
+            <div class="table-responsive" style="background-color: white; padding: 15px; border-radius: 8px;">
+                <table class="table table-striped align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Title</th>
+                            <th>City</th>
+                            <th>District</th>
+                            <th>Area Size</th>
+                            <th>Posted On</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for land in lands %}
+                        <tr>
+                            <td>{{ land.title }}</td>
+                            <td>{{ land.city }}</td>
+                            <td>{{ land.district }}</td>
+                            <td>{{ land.area_size }}</td>
+                            <td>{{ land.posted_on|date:"Y-m-d" }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'land_detail' land.pk %}" class="btn btn-info btn-sm me-1">Details</a>
+                                <a href="{% url 'land_delete' land.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="alert alert-warning text-center" role="alert">
+                No lands found at the moment.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

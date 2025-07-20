@@ -1,0 +1,58 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<!--==============================
+    Breadcumb
+==============================-->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content text-center">
+            <h1 class="breadcumb-title">All Properties</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>Property List</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--==============================
+    Property List Section
+==============================-->
+<section class="bg-smoke py-5" data-bg-src="{% static 'assets/img/shape/error-shape-bg.png' %}">
+    <div class="container">
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-8 text-center">
+                <h2 class="mb-3">All Property Listings</h2>
+                <a href="{% url 'property_create' %}" class="btn btn-primary">+ Add New Property</a>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                {% if properties %}
+                    <div class="list-group shadow rounded-3">
+                        {% for property in properties %}
+                            <div class="list-group-item d-flex justify-content-between align-items-center py-3">
+                                <div>
+                                    <h5 class="mb-1">{{ property.name }}</h5>
+                                    <p class="mb-1 text-muted">৳ {{ property.price }}</p>
+                                </div>
+                                <div>
+                                    <a href="{% url 'property_detail' property.slug %}" class="btn btn-sm btn-outline-info">View</a>
+                                    <a href="{% url 'property_update' property.slug %}" class="btn btn-sm btn-outline-warning">Edit</a>
+                                    <a href="{% url 'property_delete' property.slug %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-warning text-center">No properties available.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<!--==============================
+    Breadcrumb
+==============================-->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content text-center">
+            <h1 class="breadcumb-title">Land Listings</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>List Details</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--==============================
+    Land Detail Section
+==============================-->
+<section class="bg-smoke py-5" data-bg-src="{% static 'assets/img/shape/error-shape-bg.png' %}">
+<div class="container py-5">
+    <div class="card shadow-lg p-4 rounded-4">
+
+        <h2 class="mb-4">{{ land.title }}</h2>
+
+        <p><strong>Description:</strong><br> {{ land.description|linebreaks }}</p>
+
+        <h5>Location Details</h5>
+        <p><strong>Address:</strong> {{ land.address }}</p>
+        <p><strong>City:</strong> {{ land.city }}</p>
+        <p><strong>District:</strong> {{ land.district }}</p>
+        <p><strong>Postcode:</strong> {{ land.postcode }}</p>
+
+        <h5>Property Details</h5>
+        <p><strong>Land Type:</strong> {{ land.get_land_type_display }}</p>
+        <p><strong>Ownership Type:</strong> {{ land.get_ownership_type_display }}</p>
+        <p><strong>Area Size:</strong> {{ land.area_size }} units</p>
+        <p><strong>Road Width:</strong> {{ land.road_width }} ft</p>
+
+        <h5>Utilities</h5>
+        <ul>
+            <li>Electricity: {{ land.electricity|yesno:"Yes,No" }}</li>
+            <li>Gas: {{ land.gas|yesno:"Yes,No" }}</li>
+            <li>Water: {{ land.water|yesno:"Yes,No" }}</li>
+            <li>Drainage: {{ land.drainage|yesno:"Yes,No" }}</li>
+            <li>Legal Clearance: {{ land.legal_clearance|yesno:"Yes,No" }}</li>
+        </ul>
+
+        <!--==============================
+            Gallery Section for Multiple Images
+        ==============================-->
+        {% if land.images.exists %}
+        <section class="gallery-inner-sec space mt-5">
+            <div class="container">
+                <div class="row gy-4 justify-content-center">
+                    {% for img in land.images.all %}
+                    <div class="col-lg-4 col-xl-4 col-md-6">
+                        <div class="gallery-card2">
+                            <div class="gallery-img">
+                                <img src="{{ img.image.url }}" alt="{{ land.title }} image">
+                                <a class="popular-popup-image" href="{{ img.image.url }}">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+
+        {% if land.latitude and land.longitude %}
+        <div class="my-4">
+            <iframe 
+                src="{{ land.get_google_maps_embed_url }}" 
+                width="100%" height="300" style="border:0; border-radius: 8px;" allowfullscreen 
+                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        {% endif %}
+
+        <h5>Contact Information</h5>
+        <p><strong>Name:</strong> {{ land.contact_name }}</p>
+        <p><strong>Phone:</strong> <a href="tel:{{ land.contact_phone }}">{{ land.contact_phone }}</a></p>
+        {% if land.contact_email %}
+            <p><strong>Email:</strong> <a href="mailto:{{ land.contact_email }}">{{ land.contact_email }}</a></p>
+        {% else %}
+            <p><em>Email not provided</em></p>
+        {% endif %}
+
+        <p><strong>Published:</strong> {{ land.is_published|yesno:"Yes,No" }}</p>
+        <p><strong>Posted On:</strong> {{ land.posted_on|date:"d M, Y, H:i" }}</p>
+
+        <a href="{% url 'land_list' %}" class="btn btn-secondary mt-3">← Back to Listings</a>
+    </div>
+</div>
+</section>
+
+{% endblock %}

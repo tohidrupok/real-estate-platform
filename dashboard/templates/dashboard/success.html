@@ -1,0 +1,43 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<!-- Breadcrumb -->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content text-center py-5">
+            <h1 class="breadcumb-title display-4 fw-bold">Submission Successful</h1>
+            <ul class="breadcumb-menu list-unstyled d-flex justify-content-center gap-3 fs-5">
+                <li><a href="{% url 'home' %}" class="text-decoration-none text-primary">Home</a></li>
+                <li class="text-muted">Land Submission</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmation Section -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card shadow rounded-4 border-0 text-center p-5">
+                    <div class="mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="#0d6efd" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.97 11.03a.75.75 0 0 0 1.07 0l3.992-3.992a.75.75 0 1 0-1.06-1.06L7.5 9.439 5.573 7.512a.75.75 0 0 0-1.06 1.06l2.457 2.458z"/>
+                        </svg>
+                    </div>
+                    <h2 class="mb-3 fw-semibold">Thank you for submitting your land!</h2>
+                    <p class="lead mb-4">A manager will contact you shortly to follow up.</p>
+                    <p class="text-muted mb-4">
+                        <strong>Emergency Contact:</strong> <a href="tel:+8801913222203" class="text-decoration-none">+8801913222203</a>
+                    </p>
+                    <a href="{% url 'sell_land' %}" class="btn btn-primary btn-lg rounded-pill px-5">
+                        Submit Another Land
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

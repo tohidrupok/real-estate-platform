@@ -1,0 +1,86 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<!--==============================
+    Breadcumb
+==============================-->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content">
+            <h1 class="breadcumb-title">Team Members</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>Team</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--==============================
+Team Table Area
+==============================-->
+<div class="th-cart-wrapper space-top space-extra-bottom">
+    <div class="container">
+        <a href="{% url 'team_member_create' %}" class="th-btn radius mb-20">Add New Member</a>
+        <form action="#">
+            <table class="cart_table">
+                <thead>
+                    <tr>
+                        <th class="cart-col-image">Photo</th>
+                        <th class="cart-col-productname">Name</th>
+                        <th class="cart-col-price">Position</th>
+                        <th class="cart-col-quantity">Experience</th>
+                        <th class="cart-col-total">Contact</th>
+                        <th class="cart-col-remove">Email</th>
+                        <th class="cart-col-remove">Status</th>
+                        <th class="cart-col-remove">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for member in members %}
+                    <tr class="cart_item">
+                        <td data-title="Photo">
+                            {% if member.photo %}
+                                <img src="{{ member.photo.url }}" width="91" height="91" style="object-fit: cover; border-radius: 8px;" alt="{{ member.name }}">
+                            {% else %}
+                                <img src="{% static 'assets/img/team/default.png' %}" width="91" height="91" style="object-fit: cover; border-radius: 8px;" alt="No Image">
+                            {% endif %}
+                        </td>
+                        <td data-title="Name">
+                            <a class="cart-productname" href="{% url 'team_member_detail' member.pk %}">{{ member.name }}</a>
+                        </td>
+                        <td data-title="Position">{{ member.position }}</td>
+                        <td data-title="Experience">{{ member.years_of_experience }} years</td>
+                        <td data-title="Contact">{{ member.contact_number }}</td>
+                        <td data-title="Email">
+                            <a href="mailto:{{ member.email }}">{{ member.email }}</a>
+                        </td>
+                        <td data-title="is_active">
+                          {% if member.is_active %}
+                            <i class="fas fa-check text-success"></i>
+                          {% else %}
+                            <i class="fas fa-times text-danger"></i>
+                          {% endif %}
+                        </td>
+                        <td data-title="Actions">
+                            <a href="{% url 'team_member_update' member.pk %}" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'team_member_delete' member.pk %}" title="Delete" class="text-danger ms-2">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7">No team members found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

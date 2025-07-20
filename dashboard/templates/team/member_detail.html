@@ -1,0 +1,149 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<!--==============================
+    Breadcumb
+==============================-->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content">
+            <h1 class="breadcumb-title">Team Details</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'team_member_list' %}">Home</a></li>
+                <li>{{ member.name }}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--==============================
+    Team Area
+==============================-->
+<section class="space">
+    <div class="container">
+        <div class="team-details">
+            <div class="row">
+                <div class="col-xl-5">
+                    <div class="mb-40 mb-xl-0">
+                        {% if member.photo %}
+                            <img class="w-100" src="{{ member.photo.url }}" alt="{{ member.name }}">
+                        {% else %}
+                            <img class="w-100" src="{% static 'assets/img/team/default.jpg' %}" alt="No Photo">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-xl-7 ps-xxl-5 align-self-center">
+                    <div class="team-about">
+                        <div class="team-wrapp">
+                            <div class="top-wrap">
+                                <div class="title-wrap">
+                                    <h3 class="team-about_title">{{ member.name }}</h3>
+                                    <p class="team-about_desig">{{ member.position }}</p>
+                                </div>
+                                <div class="th-social">
+                                    {% if member.facebook %}
+                                        <a href="{{ member.facebook }}"><i class="fab fa-facebook-f"></i></a>
+                                    {% endif %}
+                                    {% if member.twitter %}
+                                        <a href="{{ member.twitter }}"><i class="fab fa-twitter"></i></a>
+                                    {% endif %}
+                                    {% if member.instagram %}
+                                        <a href="{{ member.instagram }}"><i class="fab fa-instagram"></i></a>
+                                    {% endif %}
+                                    {% if member.linkedin %}
+                                        <a href="{{ member.linkedin }}"><i class="fab fa-linkedin-in"></i></a>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <p class="team-about_text">{{ member.bio|default:"No bio available." }}</p>
+                        </div>
+
+                        <div class="about-info-wrap">
+                            <div class="about-info">
+                                <div class="about-info_icon"><i class="fas fa-fax"></i></div>
+                                <div class="about-info_content">
+                                    <p class="about-info_subtitle">Position</p>
+                                    <h6 class="about-info_title">{{ member.position }}</h6> 
+                                </div>
+                            </div> 
+
+                            <div class="about-info">
+                                <div class="about-info_icon"><i class="fa-solid fa-user"></i></div>
+                                <div class="about-info_content">
+                                    <p class="about-info_subtitle">Experience</p>
+                                    <h6 class="about-info_title">More Than {{ member.years_of_experience }} Years</h6> <!-- You can make this dynamic too -->
+                                </div>
+                            </div>
+                            <div class="about-info">
+                                <div class="about-info_icon"><i class="fas fa-phone"></i></div>
+                                <div class="about-info_content">
+                                    <p class="about-info_subtitle">Contact</p>
+                                    <h6 class="about-info_title"><a href="tel:+8801234567890">+{{ member.contact_number }}</a></h6> <!-- Optional: add phone field -->
+                                </div>
+                            </div>
+
+
+                            
+                            <div class="about-info">
+                                <div class="about-info_icon"><i class="fas fa-envelope"></i></div>
+                                <div class="about-info_content">
+                                    <p class="about-info_subtitle">Email</p>
+                                    <h6 class="about-info_title"><a href="mailto:{{ member.email }}">{{ member.email }}</a></h6> <!-- Optional: add email field in model -->
+                                </div>
+                            </div>
+                            
+
+                        </div>
+
+                        <a href="{% url 'team_member_list' %}" class="th-btn bg-theme radius">Back to Team</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+{% comment %}     
+    <!-- team/member_detail.html -->
+
+<h2>{{ member.name }}</h2>
+<p><strong>Position:</strong> {{ member.position }}</p>
+
+{% if member.photo %}
+    <img src="{{ member.photo.url }}" alt="{{ member.name }}" width="200">
+{% endif %}
+
+<p><strong>Bio:</strong> {{ member.bio }}</p>
+
+<!-- Social Media -->
+<div>
+    {% if member.facebook %}
+        <a href="{{ member.facebook }}" target="_blank">Facebook</a>
+    {% endif %}
+    {% if member.twitter %}
+        | <a href="{{ member.twitter }}" target="_blank">Twitter</a>
+    {% endif %}
+    {% if member.linkedin %}
+        | <a href="{{ member.linkedin }}" target="_blank">LinkedIn</a>
+    {% endif %}
+    {% if member.instagram %}
+        | <a href="{{ member.instagram }}" target="_blank">Instagram</a>
+    {% endif %}
+</div>
+
+<br>
+<a href="{% url 'team_member_update' member.pk %}">Edit</a> |
+<a href="{% url 'team_member_list' %}">Back to list</a> {% endcomment %}

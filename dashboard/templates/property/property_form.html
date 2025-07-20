@@ -1,0 +1,226 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<!-- Breadcumb -->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content text-center">
+            <h1 class="breadcumb-title">{% if form.instance.pk %}Update{% else %}Create{% endif %} Property</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>{% if form.instance.pk %}Update{% else %}Create{% endif %} Property</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Property Form -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-lg rounded-4 border-0 p-4">
+
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                    {% endif %}
+
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <label for="{{ form.name.id_for_label }}" class="form-label">Property Name</label>
+                                {{ form.name }}
+                                {% if form.name.errors %}
+                                    <div class="text-danger small">{{ form.name.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.id_no.id_for_label }}" class="form-label">ID No.</label>
+                                {{ form.id_no }}
+                                {% if form.id_no.errors %}
+                                    <div class="text-danger small">{{ form.id_no.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.type.id_for_label }}" class="form-label">Type</label>
+                                {{ form.type }}
+                                {% if form.type.errors %}
+                                    <div class="text-danger small">{{ form.type.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.purpose.id_for_label }}" class="form-label">Purpose</label>
+                                {{ form.purpose }}
+                                {% if form.purpose.errors %}
+                                    <div class="text-danger small">{{ form.purpose.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.price.id_for_label }}" class="form-label">Price</label>
+                                {{ form.price }}
+                                {% if form.price.errors %}
+                                    <div class="text-danger small">{{ form.price.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.sqft.id_for_label }}" class="form-label">Square Feet</label>
+                                {{ form.sqft }}
+                                {% if form.sqft.errors %}
+                                    <div class="text-danger small">{{ form.sqft.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.room.id_for_label }}" class="form-label">Total Rooms</label>
+                                {{ form.room }}
+                                {% if form.room.errors %}
+                                    <div class="text-danger small">{{ form.room.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.bedroom.id_for_label }}" class="form-label">Bedrooms</label>
+                                {{ form.bedroom }}
+                                {% if form.bedroom.errors %}
+                                    <div class="text-danger small">{{ form.bedroom.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.bath.id_for_label }}" class="form-label">Bathrooms</label>
+                                {{ form.bath }}
+                                {% if form.bath.errors %}
+                                    <div class="text-danger small">{{ form.bath.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.big_yard.id_for_label }}" class="form-label">Big Yard</label>
+                                {{ form.big_yard }}
+                                {% if form.big_yard.errors %}
+                                    <div class="text-danger small">{{ form.big_yard.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.featured_sqft.id_for_label }}" class="form-label">Featured Sqft</label>
+                                {{ form.featured_sqft }}
+                                {% if form.featured_sqft.errors %}
+                                    <div class="text-danger small">{{ form.featured_sqft.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.built_in.id_for_label }}" class="form-label">Built Year</label>
+                                {{ form.built_in }}
+                                {% if form.built_in.errors %}
+                                    <div class="text-danger small">{{ form.built_in.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="{{ form.address.id_for_label }}" class="form-label">Address</label>
+                                {{ form.address }}
+                                {% if form.address.errors %}
+                                    <div class="text-danger small">{{ form.address.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="{{ form.description_short.id_for_label }}" class="form-label">Short Description</label>
+                                {{ form.description_short }}
+                                {% if form.description_short.errors %}
+                                    <div class="text-danger small">{{ form.description_short.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="{{ form.description_long.id_for_label }}" class="form-label">Long Description</label>
+                                {{ form.description_long }}
+                                {% if form.description_long.errors %}
+                                    <div class="text-danger small">{{ form.description_long.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Boolean fields as switches -->
+                            <div class="col-md-4 d-flex align-items-center">
+                                <div class="form-check form-switch w-100">
+                                    {{ form.parking }}
+                                    <label class="form-check-label" for="{{ form.parking.id_for_label }}">Parking Available</label>
+                                    {% if form.parking.errors %}
+                                    <div class="text-danger small">{{ form.parking.errors.as_text|striptags }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 d-flex align-items-center">
+                                <div class="form-check form-switch w-100">
+                                    {{ form.elevator }}
+                                    <label class="form-check-label" for="{{ form.elevator.id_for_label }}">Elevator Available</label>
+                                    {% if form.elevator.errors %}
+                                    <div class="text-danger small">{{ form.elevator.errors.as_text|striptags }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 d-flex align-items-center">
+                                <div class="form-check form-switch w-100">
+                                    {{ form.wifi }}
+                                    <label class="form-check-label" for="{{ form.wifi.id_for_label }}">WiFi Available</label>
+                                    {% if form.wifi.errors %}
+                                    <div class="text-danger small">{{ form.wifi.errors.as_text|striptags }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 d-flex align-items-center">
+                                <div class="form-check form-switch w-100">
+                                    {{ form.featured }}
+                                    <label class="form-check-label" for="{{ form.featured.id_for_label }}">Featured Property</label>
+                                    {% if form.featured.errors %}
+                                    <div class="text-danger small">{{ form.featured.errors.as_text|striptags }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 d-flex align-items-center">
+                                <div class="form-check form-switch w-100">
+                                    {{ form.is_active }}
+                                    <label class="form-check-label" for="{{ form.is_active.id_for_label }}">Is Active</label>
+                                    {% if form.is_active.errors %}
+                                    <div class="text-danger small">{{ form.is_active.errors.as_text|striptags }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Image Upload -->
+                            <div class="col-md-12">
+                                <label class="form-label">Upload Property Images</label>
+                                <input type="file" name="images" multiple class="form-control">
+                                <small class="text-muted">You can select multiple images</small>
+                            </div>
+
+                            <div class="col-12 text-center mt-4">
+                                <button type="submit" class="btn btn-primary px-5">Save Property</button>
+                                <a href="{% url 'property_list' %}" class="btn btn-outline-secondary ms-2">Cancel</a>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

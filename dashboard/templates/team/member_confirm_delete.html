@@ -1,0 +1,37 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<!--==============================
+    Breadcumb
+==============================-->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content">
+            <h1 class="breadcumb-title">Delete Team Member</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>Delete Team Member</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--==============================
+Form Area
+==============================-->
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h2>Are you sure you want to delete "<strong>{{ member.name }}</strong>"?</h2>
+            <form method="post" class="mt-4">
+                {% csrf_token %}
+                <button type="submit" class="th-btn radius bg-danger text-white px-4 py-2">Yes, Delete</button>
+                <a href="{% url 'team_member_list' %}" class="th-btn radius bg-secondary text-white px-4 py-2 ms-3">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

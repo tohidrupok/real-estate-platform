@@ -1,4 +1,4 @@
-# Real Estate Platform 🏠
+<!-- # Real Estate Platform 🏠
 
 A modern web-based real estate platform for listing and browsing properties.
 
@@ -31,4 +31,4 @@ python manage.py migrate
 python manage.py runserver
 
 ## 🚀 Tohid Rupok
-## 🚀 Diu
+## 🚀 Diu -->

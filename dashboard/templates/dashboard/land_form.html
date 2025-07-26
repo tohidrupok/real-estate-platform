@@ -16,14 +16,12 @@
         </div>
     </div>
 </div>
-
 <!-- Land Form -->
 <section class="bg-light py-5">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="card shadow-lg rounded-4 border-0 p-4">
-
                     {% if form.non_field_errors %}
                     <div class="alert alert-danger">
                         {{ form.non_field_errors }}
@@ -33,7 +31,6 @@
                     <form method="post" enctype="multipart/form-data" novalidate>
                         {% csrf_token %}
                         <div class="row g-3">
-
                             {% for field in form.visible_fields %}
                                 {% if field.field.widget.input_type == "checkbox" %}
                                     <div class="col-md-6 d-flex align-items-center">
@@ -69,7 +66,6 @@
                                 </button>
                                 <a href="{% url 'sell_land' %}" class="btn btn-outline-secondary ms-2">Cancel</a>
                             </div>
-
                         </div>
                     </form>
 

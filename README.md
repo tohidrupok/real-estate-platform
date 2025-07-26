@@ -1,6 +1,6 @@
 <!-- # Real Estate Platform 🏠
 
-A modern web-based real estate platform for listing and browsing properties.
+A modern web-based real estate platform for listing and browsing properties .
 
 ## 🔧 Features
 

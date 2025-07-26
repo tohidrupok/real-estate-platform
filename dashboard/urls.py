@@ -33,5 +33,25 @@ urlpatterns = [
     path('team/create/', views.team_member_create, name='team_member_create'),
     path('team/<int:pk>/update/', views.team_member_update, name='team_member_update'),
     path('team/<int:pk>/delete/', views.team_member_delete, name='team_member_delete'),
+    
+    path('designs/', views.design_list, name='design_list'),
+    path('designs/<int:pk>/', views.design_detail, name='design_detail'),
+    
+    path('interior/', views.dashboard_view, name='interior_dashboard'),
+    path('categories/create/', views.category_create, name='category_create'),
+    path('designs/create/', views.design_create, name='design_create'),
+
+    path('categories/<int:pk>/edit/', views.category_edit, name='category_edit'),
+    path('categories/<int:pk>/delete/', views.category_delete, name='category_delete'),
+    path('designs/<int:pk>/edit/', views.design_edit, name='design_edit'),
+    path('designs/<int:pk>/delete/', views.design_delete, name='design_delete'),
+
+    path('page/gallery/', views.gallery_view, name='gallery'),
+    path('page/faq/', views.faq_view, name='faq'),
+
+
+    path('testimonials/', views.testimonial_dashboard, name='testimonial_dashboard'),
+    path('testimonials/delete/<int:pk>/', views.delete_testimonial, name='delete_testimonial'),
+    path('testimonials/edit/<int:pk>/', views.edit_testimonial, name='edit_testimonial'),
 
 ]

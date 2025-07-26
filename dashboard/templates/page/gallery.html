@@ -1,0 +1,86 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<div class="breadcumb-wrapper " data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content">
+            <h1 class="breadcumb-title">Amazing Gallery</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>Gallery</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<section class="gallery-inner-sec space">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-7">
+                <div class="title-area text-center mb-2">
+                    <p class="sub-title"><span class="double-line"></span> Gallery</p>
+                    <h2 class="sec-title mb-4">Explore Our Beautiful Gallery</h2>
+
+                    <!-- Dynamic Filter Buttons -->
+                    <div class="filter-menu style-2 indicator-active filter-menu-active mt-2 justify-content-center">
+                        <button data-filter="*" class="th-btn tab-btn active">View All</button>
+                        {% for cat in categories %}
+                            <button data-filter=".{{ cat.slug }}" class="th-btn tab-btn">{{ cat.name }}</button>
+                        {% endfor %}
+                        <button data-filter=".land" class="th-btn tab-btn">Land or Plot</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div class="row gy-4 justify-content-center filter-active">
+
+            <!-- DesignItem Items -->
+            {% for item in page_obj %}
+                <div class="col-lg-4 col-md-6 filter-item {{ item.category_slug }}">
+                    <div class="gallery-card2">
+                        <div class="gallery-img">
+                            <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                            <a class="popular-popup-image" href="{{ item.image.url }}">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <!-- LandImage Items -->
+            {% for land in land_images %}
+                <div class="col-lg-4 col-md-6 filter-item land">
+                    <div class="gallery-card2">
+                        <div class="gallery-img">
+                            <img src="{{ land.image.url }}" alt="{{ land.land.title }}">
+                            <a class="popular-popup-image" href="{{ land.image.url }}">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        <div class="text-center mt-5">
+            <nav class="pagination">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                    {% endif %}
+                    <li class="page-item active"><a class="page-link">{{ page_obj.number }}</a></li>
+                    {% if page_obj.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

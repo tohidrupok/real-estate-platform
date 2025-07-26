@@ -1,0 +1,42 @@
+<h2>Client Testimonials</h2>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Photo</th>
+        <th>Name</th>
+        <th>Designation</th>
+        <th>Message</th>
+        <th>Actions</th>
+    </tr>
+    {% for testimonial in testimonials %}
+    <tr>
+        <td>
+            {% if testimonial.photo %}
+                <img src="{{ testimonial.photo.url }}" width="50" height="50">
+            {% else %}
+                N/A
+            {% endif %}
+        </td>
+        <td>{{ testimonial.name|truncatechars:20 }}</td>
+        <td>{{ testimonial.designation }}</td>
+        <td>{{ testimonial.message|truncatechars:100 }}</td>
+        <td>
+            <a href="{% url 'edit_testimonial' testimonial.pk %}">Edit</a> |
+            <a href="{% url 'delete_testimonial' testimonial.pk %}" onclick="return confirm('Delete this testimonial?')">Delete</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5">No testimonials yet.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<hr>
+
+<h3>Add New Testimonial</h3>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Testimonial</button>
+</form>

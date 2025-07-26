@@ -1,0 +1,86 @@
+{% extends 'index.html' %}
+{% load static %}
+
+
+{% block body %}
+
+<!--==============================
+Breadcrumb
+==============================-->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content">
+            <h1 class="breadcumb-title">Interior</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>Interior</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--==============================
+Product Grid
+==============================-->
+<section class="space-top space-extra-bottom">
+    <div class="container">
+        <div class="th-sort-bar mb-4">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-md">
+                    <p class="woocommerce-result-count">
+                        Showing {{ page_obj.start_index }}–{{ page_obj.end_index }} of {{ page_obj.paginator.count }} results
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="row gy-40">
+            {% for design in page_obj %}
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+                <div class="th-product product-grid">
+                    <div class="product-img">
+                        <a href="{% url 'design_detail' design.pk %}">
+                            <img src="{{ design.image.url }}" alt="{{ design.name }}" style="height: 250px; width: 100%; object-fit: cover; border-radius: 8px; display: block;">
+                        </a>
+                        {% if design.is_featured %}
+                            <span class="product-tag">Hot</span>
+                        {% endif %}
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">
+                            <a href="{% url 'design_detail' design.pk %}">{{ design.name }}</a>
+                        </h3>
+                        <span class="price">{{ design.category.name }}</span>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+                <p class="text-center">No designs found.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        <div class="th-pagination text-center pt-50">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li><a href="?page={{ page_obj.previous_page_number }}"><i class="far fa-arrow-left"></i></a></li>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                    <li class="{% if page_obj.number == num %}active{% endif %}">
+                        <a href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li><a class="next-page" href="?page={{ page_obj.next_page_number }}">Next <i class="far fa-arrow-right"></i></a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block script %}
+<!-- No popup scripts needed -->
+{% endblock %}

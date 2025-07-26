@@ -282,10 +282,10 @@
                     <li class="menu-item-has-children">
                         <a href="#">Pages</a>
                         <ul class="sub-menu">
-                            <li><a href="gallery.html">Gallery Page</a></li>
+                            <li><a href="{% url 'gallery' %}">Gallery Page</a></li>
                             <li><a href="service.html">Service Page</a></li>
                             <li><a href="neighborhood-guide.html">Neighborhood Guide</a></li>
-                            <li><a href="faq.html">Faq Page</a></li>
+                            <li><a href="{% url 'faq' %}">Faq Page</a></li>
                         </ul>
                     </li>
                     {% comment %} <li class="menu-item-has-children">
@@ -315,7 +315,7 @@
                         <div class="header-links">
                             <ul>
                                 <li><i class="fa-solid fa-envelope"></i> <a href="mailto:btsrealestate@mail.com">btplimited@gmail.com</a></li>
-                                <li><i class="fa-solid fa-phone"></i> <a href="tel:+0012345678900">+8801913222203</a></li>
+                                <li><i class="fa-solid fa-phone"></i> <a href="tel:+0012345678900">+8809639246230</a></li>
                             </ul>
                         </div>
                     </div>
@@ -377,8 +377,8 @@
                                     <li class="menu-item-has-children">
                                         <a href="#">Interior</a>
                                         <ul class="sub-menu">
-                                            <li><a href="#">Interior 1</a></li>  
-                                            <li><a href="#">Interior 2</a></li>  
+                                            <li><a href="{% url 'design_list' %}">Interior Listing</a></li>  
+                                            
                                         </ul>
                                     </li>
                                     {% comment %} <li class="menu-item-has-children">
@@ -391,11 +391,10 @@
                                     <li class="menu-item-has-children">
                                         <a href="#">Pages</a>
                                         <ul class="sub-menu">
-                                            <li><a href="gallery.html">Gallery Page</a></li>
+                                            <li><a href="{% url 'gallery' %}">Gallery Page</a></li>
                                             <li><a href="service.html">Service Page</a></li>
                                             <li><a href="neighborhood-guide.html">Neighborhood Guide</a></li>
-                                            <li><a href="faq.html">Faq Page</a></li>
-                                            
+                                            <li><a href="{% url 'faq' %}">Faq Page</a></li>
                                         </ul>
                                     </li>
                                     {% comment %} <li class="menu-item-has-children">
@@ -423,6 +422,7 @@
                                                             <li><a href="{% url 'team_member_list' %}">Employee List</a></li> 
                                                             <li><a href="{% url 'upload_video' %}">Theme Video</a></li>                                               
                                                             <li><a href="{% url 'land_list' %}">View Submitted Lands</a></li>  
+                                                            <li><a href="{% url 'interior_dashboard' %}">Interior Manage</a></li>  
                                                                                                        
                                                         </ul>
                                                     </li>
@@ -435,6 +435,7 @@
                                                             <li><a href="{% url 'property_list' %}">Property List</a></li>
                                                             <li><a href="{% url 'upload_video' %}">Theme Video</a></li>
                                                             <li><a href="{% url 'land_list' %}">View Submitted Lands</a></li>
+                                                            <li><a href="{% url 'interior_dashboard' %}">Interior Manage</a></li>  
                                                         </ul>
                                                     </li>
                                                 {% endif %}
@@ -445,7 +446,7 @@
                         </div>
                         <div class="col-auto d-none d-xl-block">
                             <div class="header-button">
-                                <a href="contact.html" class="th-btn outline pill text-white"><i class="fa-regular fa-house-chimney me-2"></i> Add Listing </a>
+                                <a href="{% url 'design_list' %}" class="th-btn outline pill text-white"><i class="fa-regular fa-house-chimney me-2"></i> See Interior </a>
                                 <button type="button" class="icon-btn searchBoxToggler text-white"><i class="far fa-search"></i></button>
                             </div>
                         </div>
@@ -476,7 +477,7 @@
                                 <div class="footer-info-wrap">
                                     <div class="footer-info">
                                         <i class="fas fa-phone"></i>
-                                        <p class="info-box_link"><a href="tel:+8801913222203">01622151055</a></p>
+                                        <p class="info-box_link"><a href="tel:+8809639246230">+8809639246230</a></p>
                                     </div>
                                     <div class="footer-info">
                                         <i class="fas fa-envelope"></i>
@@ -484,7 +485,7 @@
                                     </div>
                                     <div class="footer-info">
                                         <i class="fas fa-location-dot"></i>
-                                        <p class="info-box_link"><span>Pollobi, Mirpur, Dhaka</span></p>
+                                        <p class="info-box_link"><span>House-146(4th Floor) Road-02, Block-A, Sec-12,Pallabi(Bus Stand), Mirpur, Dhaka-1216</span></p>
                                     </div>
                                 </div>
 

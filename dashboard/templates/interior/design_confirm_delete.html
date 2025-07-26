@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<!--==============================
+    Breadcrumb
+==============================-->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content text-center">
+            <h1 class="breadcumb-title">Delete Design</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'interior_dashboard' %}">Interior Dashboard</a></li>
+                <li>Delete Design</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--==============================
+    Delete Confirmation Section
+==============================-->
+<section class="py-5 bg-smoke">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-danger text-white">
+                        <h4 class="mb-0">Confirm Deletion</h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="fs-5">
+                            Are you sure you want to delete the design: 
+                            <strong>{{ design.name }}</strong>?
+                        </p>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="d-flex justify-content-between">
+                                <a href="{% url 'interior_dashboard' %}" class="btn btn-secondary">Cancel</a>
+                                <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

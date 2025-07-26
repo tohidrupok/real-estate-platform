@@ -1,0 +1,70 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<!--==============================
+    Breadcrumb
+==============================-->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content text-center">
+            <h1 class="breadcumb-title">{% if form.instance.pk %}Edit{% else %}Add{% endif %} Design</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'interior_dashboard' %}">Interior Dashboard</a></li>
+                <li>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Design</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--==============================
+    Design Form Section
+==============================-->
+<section class="py-5 bg-smoke">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0 text-white">{% if form.instance.pk %}Edit{% else %}Add{% endif %} Design</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data" novalidate>
+                            {% csrf_token %}
+                            {% for field in form %}
+                                <div class="mb-3">
+                                    {% if field.field.widget.input_type == 'checkbox' %}
+                                        <div class="form-check">
+                                            {{ field }}
+                                            <label class="form-check-label" for="{{ field.id_for_label }}">
+                                                {{ field.label }}
+                                            </label>
+                                        </div>
+                                    {% else %}
+                                        <label class="form-label" for="{{ field.id_for_label }}">
+                                            {{ field.label }}
+                                        </label>
+                                        {{ field }}
+                                    {% endif %}
+
+                                    {% if field.errors %}
+                                        <div class="text-danger small">
+                                            {{ field.errors|join:", " }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                            <div class="d-flex justify-content-between">
+                                <a href="{% url 'interior_dashboard' %}" class="btn btn-secondary">← Back</a>
+                                <button type="submit" class="btn btn-success">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

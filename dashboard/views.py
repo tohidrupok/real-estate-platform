@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import PropertyImage, Property, Video, Land, LandImage, TeamMember
-from .forms import PropertyForm, VideoForm, LandForm, TeamMemberForm
+from .models import PropertyImage, Property, Video, Land, LandImage, TeamMember, Category, DesignItem, ClientTestimonial
+from .forms import PropertyForm, VideoForm, LandForm, TeamMemberForm,CategoryForm, DesignItemForm, ClientTestimonialForm
 from django.contrib.auth.models import User, Group 
 
 
@@ -11,9 +11,11 @@ def public_home(request):
     video = Video.objects.last()  
 
     featured_properties = Property.objects.filter(is_active=True, featured=True).order_by('-date_posted')[:9]
+    testimonials = ClientTestimonial.objects.filter(is_approved=True).order_by('-created_at')
 
     # Paginated all properties
     property_list = Property.objects.filter(is_active=True).order_by('-date_posted')
+    complete_project_list = Property.objects.filter(is_complete=True).order_by('-date_posted')
     paginator = Paginator(property_list, 6)  
     page = request.GET.get('page')
 
@@ -29,7 +31,9 @@ def public_home(request):
         'video': video,
         'featured_properties': featured_properties,
         'properties': properties,
-        'members': members
+        'complete_project_list': complete_project_list,
+        'members': members,
+        'testimonials': testimonials
     })
 
 def about(request):
@@ -131,7 +135,6 @@ def property_list_manage(request):
         'featured_properties': featured_properties,
     })
 
-
 def property_detail(request, slug):
     property = get_object_or_404(Property, slug=slug)
     featured_properties = Property.objects.filter(featured=True).order_by('-date_posted')[:4]
@@ -209,7 +212,7 @@ def upload_video(request):
 def land_create_view(request):
     if request.method == 'POST':
         form = LandForm(request.POST, request.FILES)
-        images = request.FILES.getlist('extra_images')  # Multiple image field
+        images = request.FILES.getlist('extra_images')  
 
         if form.is_valid():
             land = form.save()
@@ -284,3 +287,137 @@ def team_member_detail(request, pk):
     return render(request, 'team/member_detail.html', {'member': member}) 
 
 
+# ----- Category Views -----
+
+def dashboard_view(request):
+    categories = Category.objects.all()
+    designs = DesignItem.objects.select_related('category').all()
+    return render(request, 'interior/interior.html', {
+        'categories': categories,
+        'designs': designs
+    })
+
+def category_create(request):
+    form = CategoryForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('interior_dashboard')
+    return render(request, 'interior/category_form.html', {'form': form})
+
+def design_create(request):
+    form = DesignItemForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+        return redirect('interior_dashboard')
+    return render(request, 'interior/design_form.html', {'form': form})
+
+def category_edit(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    form = CategoryForm(request.POST or None, instance=category)
+    if form.is_valid():
+        form.save()
+        return redirect('interior_dashboard')
+    return render(request, 'interior/category_form.html', {'form': form})
+
+def category_delete(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    if request.method == 'POST':
+        category.delete()
+        return redirect('interior_dashboard')
+    return render(request, 'interior/category_confirm_delete.html', {'category': category})
+
+
+# ----- DesignItem Edit/Delete -----
+
+def design_edit(request, pk):
+    design = get_object_or_404(DesignItem, pk=pk)
+    form = DesignItemForm(request.POST or None, request.FILES or None, instance=design)
+    if form.is_valid():
+        form.save()
+        return redirect('interior_dashboard')
+    return render(request, 'interior/design_form.html', {'form': form})
+
+def design_delete(request, pk):
+    design = get_object_or_404(DesignItem, pk=pk)
+    if request.method == 'POST':
+        design.delete()
+        return redirect('interior_dashboard')
+    return render(request, 'interior/design_confirm_delete.html', {'design': design}) 
+
+
+def design_list(request):
+    design_qs = DesignItem.objects.select_related('category').all().order_by('name')
+    paginator = Paginator(design_qs, 16)  
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'interior/design_list.html', {
+        'page_obj': page_obj,
+    })
+
+def design_detail(request, pk):
+    design = get_object_or_404(DesignItem, pk=pk)
+    featured_designs = DesignItem.objects.filter(is_featured=True).exclude(pk=pk)[:8]
+
+    return render(request, 'interior/design_detail.html', {
+        'design': design,
+        'featured_designs': featured_designs,
+    })
+
+
+
+def faq_view(request):
+    return render(request, 'page/faq.html')
+
+
+def gallery_view(request):
+    design_items = DesignItem.objects.select_related('category').all()
+    land_images = LandImage.objects.select_related('land').all()
+    categories = Category.objects.all()
+
+    paginator = Paginator(design_items, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'page/gallery.html', {
+        'page_obj': page_obj,
+        'land_images': land_images,
+        'categories': categories,
+    })
+ 
+
+
+def testimonial_dashboard(request):
+    testimonials = ClientTestimonial.objects.all().order_by('-created_at')
+
+    # Handle form submission
+    if request.method == 'POST':
+        form = ClientTestimonialForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('testimonial_dashboard')
+    else:
+        form = ClientTestimonialForm()
+
+    return render(request, 'page/testimonial_dashboard.html', {
+        'testimonials': testimonials,
+        'form': form,
+    })
+
+def delete_testimonial(request, pk):
+    testimonial = get_object_or_404(ClientTestimonial, pk=pk)
+    testimonial.delete()
+    return redirect('testimonial_dashboard')
+
+def edit_testimonial(request, pk):
+    testimonial = get_object_or_404(ClientTestimonial, pk=pk)
+    if request.method == 'POST':
+        form = ClientTestimonialForm(request.POST, request.FILES, instance=testimonial)
+        if form.is_valid():
+            form.save()
+            return redirect('testimonial_dashboard')
+    else:
+        form = ClientTestimonialForm(instance=testimonial)
+
+    return render(request, 'page/edit_testimonial.html', {'form': form})

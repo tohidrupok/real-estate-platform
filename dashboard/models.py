@@ -33,6 +33,7 @@ class Property(models.Model):
 
     # Extra convenience fields
     is_active = models.BooleanField(default=True, verbose_name="Is Active")
+    is_complete = models.BooleanField(default=False, verbose_name="Is Complete")
     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)
 
     def __str__(self):
@@ -157,3 +158,44 @@ class TeamMember(models.Model):
     def __str__(self):
         return self.name 
     
+
+from django.utils.text import slugify
+
+class Category(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+    
+    @property
+    def slug(self):
+        return slugify(self.name)
+
+class DesignItem(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="design_items")
+    name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to="Interior/designs/")
+    description = models.TextField(blank=True)
+    is_featured = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+ 
+    @property
+    def category_slug(self):
+        return slugify(self.category.name)
+
+
+class ClientTestimonial(models.Model):
+    name = models.CharField(max_length=100)
+    designation = models.CharField(max_length=100, blank=True)  
+    message = models.TextField()
+    photo = models.ImageField(upload_to='testimonials/', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_approved = models.BooleanField(default=False)  
+
+    def __str__(self):
+        return f"{self.name} - Testimonial"

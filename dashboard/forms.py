@@ -1,5 +1,5 @@
 from django import forms
-from .models import Property, Video, Land, TeamMember
+from .models import Property, Video, Land, TeamMember, Category, DesignItem, ClientTestimonial
 
 class PropertyForm(forms.ModelForm):
     class Meta:
@@ -21,6 +21,7 @@ class PropertyForm(forms.ModelForm):
             'address': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
             'description_short': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
             'description_long': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'is_complete': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 
 
@@ -99,3 +100,30 @@ class TeamMemberForm(forms.ModelForm):
             'years_of_experience': forms.NumberInput(attrs={'class': 'form-control'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
+
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['name']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+class DesignItemForm(forms.ModelForm):
+    class Meta:
+        model = DesignItem
+        fields = ['category', 'name', 'image', 'description', 'is_featured']
+        widgets = {
+            'category': forms.Select(attrs={'class': 'form-select'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'is_featured': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+
+class ClientTestimonialForm(forms.ModelForm):
+    class Meta:
+        model = ClientTestimonial
+        fields = ['name', 'designation', 'message', 'photo', 'is_approved']

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import PropertyImage, Property, Video, Land, LandImage, TeamMember, Category, DesignItem, ClientTestimonial
+from .models import PropertyImage, Property, Video, Land, LandImage, TeamMember, Category, DesignItem, ClientTestimonial, Service
 from .forms import PropertyForm, VideoForm, LandForm, TeamMemberForm,CategoryForm, DesignItemForm, ClientTestimonialForm
 from django.contrib.auth.models import User, Group 
 
@@ -420,4 +420,14 @@ def edit_testimonial(request, pk):
     else:
         form = ClientTestimonialForm(instance=testimonial)
 
-    return render(request, 'page/edit_testimonial.html', {'form': form})
+    return render(request, 'page/edit_testimonial.html', {'form': form}) 
+
+
+def service_list(request):
+    service_list = Service.objects.all().order_by('-created_at')
+    paginator = Paginator(service_list, 6)  # 6 per page
+
+    page_number = request.GET.get('page')
+    services = paginator.get_page(page_number)
+
+    return render(request, 'your_app/services.html', {'services': services})

@@ -30,7 +30,7 @@
                             <div class="row gy-50 gx-40 align-items-center">
                                 <div class="col-xxl-7 col-xl-7 col-lg-8">
                                     <div class="hero-1-content pe-xl-4">
-                                        <h1 class="hero-title" data-ani="slideinup" data-ani-delay="0.2s">Journey To Your Perfect <span class="title2 text-theme"> Luxury Home</span></h1>
+                                        <h1 class="hero-title" data-ani="slideinup" data-ani-delay="0.2s">Discover Perfect Luxury Homes<span class="title2 text-theme"> BTP</span></h1>
                                         <div class="btn-group justify-content-center" data-ani="slideinup" data-ani-delay="0.4s">
                                             <a href="{% url 'propertys' %}" class="th-btn style2 pill">Explore Property </a>
                                         </div>
@@ -65,7 +65,7 @@
                             <div class="row gy-50 gx-40 align-items-center">
                                 <div class="col-xxl-7 col-xl-7 col-lg-8">
                                     <div class="hero-1-content pe-xl-4">
-                                        <h1 class="hero-title" data-ani="slideinup" data-ani-delay="0.2s">Find Your Perfect Place to <span class="title2 text-theme"> Call Home</span></h1>
+                                        <h1 class="hero-title" data-ani="slideinup" data-ani-delay="0.2s">Begin the Journey to Your <span class="title2 text-theme"> Dream Home</span></h1>
                                         <div class="btn-group justify-content-center" data-ani="slideinup" data-ani-delay="0.4s">
                                             <a href="{% url 'propertys' %}" class="th-btn style2 pill">Explore Property </a>
                                         </div>
@@ -100,7 +100,7 @@
                             <div class="row gy-50 gx-40 align-items-center">
                                 <div class="col-xxl-7 col-xl-7 col-lg-8">
                                     <div class="hero-1-content pe-xl-4">
-                                        <h1 class="hero-title" data-ani="slideinup" data-ani-delay="0.2s">Experience Real Estate <span class="title2 text-theme"> Never Before</span></h1>
+                                        <h1 class="hero-title" data-ani="slideinup" data-ani-delay="0.2s">Discover Real Estate in a Whole<span class="title2 text-theme"> New Way</span></h1>
                                         <div class="btn-group justify-content-center" data-ani="slideinup" data-ani-delay="0.4s">
                                             <a href="{% url 'propertys' %}" class="th-btn style2 pill">Explore Property </a>
                                         </div>
@@ -135,7 +135,7 @@
                             <div class="row gy-50 gx-40 align-items-center">
                                 <div class="col-xxl-7 col-xl-7 col-lg-8">
                                     <div class="hero-1-content pe-xl-4">
-                                        <h1 class="hero-title" data-ani="slideinup" data-ani-delay="0.2s">Discover Real Estate Piller <span class="title2 text-theme"> Dream Home</span></h1>
+                                        <h1 class="hero-title" data-ani="slideinup" data-ani-delay="0.2s">Where Dreams Meet Homes <span class="title2 text-theme"> BTP</span></h1>
                                         <div class="btn-group justify-content-center" data-ani="slideinup" data-ani-delay="0.4s">
                                             <a href="{% url 'propertys' %}" class="th-btn style2 pill">Explore Property </a>
                                         </div>
@@ -330,7 +330,7 @@ Search Area
                                                 <div class="price_slider_wrapper">
                                                     <div class="price_slider"></div>
                                                     <div class="price_label">
-                                                        <span class="from">৳ 125000</span>-<span class="to">৳ 825,000.00</span>
+                                                        <span class="from">125000</span>-<span class="to"> 825,000.00</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -477,7 +477,7 @@ Search Area
                                                 <div class="price_slider_wrapper">
                                                     <div class="price_slider"></div>
                                                     <div class="price_label">
-                                                        <span class="from">৳ 125000</span>-<span class="to">৳ 825,000.00</span>
+                                                        <span class="from">125000</span>-<span class="to">825,000.00</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -624,7 +624,7 @@ Search Area
                                                 <div class="price_slider_wrapper">
                                                     <div class="price_slider"></div>
                                                     <div class="price_label">
-                                                        <span class="from">৳ 125000</span>-<span class="to">৳ 825,000.00</span>
+                                                        <span class="from">125000</span>-<span class="to">825,000.00</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -676,7 +676,9 @@ Feature Area
                                     {% for image in property.images.all %}
                                         <div class="swiper-slide">
                                             <a class="popular-popup-image" href="{{ image.image.url }}">
-                                                <img src="{{ image.image.url }}" alt="Image">
+                                               
+                                                <img src="{{ image.image.url }}" alt="Image" style="width: 100%; height: 300px; object-fit: cover; border-radius: 8px;">
+
                                             </a>
                                         </div>
                                     {% empty %}
@@ -746,14 +748,14 @@ Feature Area
                                 </li>
                             </ul>
                             <div class="property-bottom">
-                                <h6 class="box-title">৳ {{ property.price|floatformat:2}}</h6>
+                                <h6 class="box-title">{{ property.price|floatformat:2}}</h6>
                                 <a class="th-btn sm style3 pill" href="{% url 'property_detail' property.slug %}">View More</a>
                             </div>
                         </div>
                     </div>
                 </div>
             {% endfor %}
-</div>
+        </div>
         </div>
     </section><!--==============================
 Why choose Area  
@@ -764,7 +766,7 @@ Why choose Area
                 <div class="col-xl-6">
                     <div class="title-area text-center text-xl-start text-left white mb-4">
                         <p class="sub-title fadeinup wow" data-wow-duration="1.5s" data-wow-delay="0.1s"> <span class="double-line"></span> Why Choose Us </p>
-                        <h2 class="sec-title text-white mb-0 fadeinup wow" data-wow-duration="1.5s" data-wow-delay="0.3s">Trusted by 1000 Thusand Customer</h2>
+                        <h2 class="sec-title text-white mb-0 fadeinup wow" data-wow-duration="1.5s" data-wow-delay="0.3s">Trusted by 350  Customer</h2>
                     </div>
                 </div>
                 <div class="col-xl-auto">
@@ -940,7 +942,7 @@ Feature Area
                             <div class="property-bottom">
                                 <h6 class="box-title">
                                     
-                                    ৳ {{ property.price|floatformat:2 }}
+                                    {{ property.price|floatformat:2 }}
                                 </h6>
                                 <a class="th-btn sm style3 pill" href="{% url 'property_detail' property.slug %}">View More</a>
                             </div>
@@ -1151,7 +1153,7 @@ Cites Explore Area
                             <div class="property-content">
                                 <div class="media-body">
                                     <h3 class="box-title"><a href="">{{ property.name }}</a></h3>
-                                    <h5 class="price">৳ {{ property.price }} <span class="month">/month</span></h5>
+                                    <h5 class="price">{{ property.price }} <span class="month">/month</span></h5>
                                     <p class="box-text">{{ property.description|truncatewords:20 }}</p>
                                 </div>
 

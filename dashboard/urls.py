@@ -54,4 +54,6 @@ urlpatterns = [
     path('testimonials/delete/<int:pk>/', views.delete_testimonial, name='delete_testimonial'),
     path('testimonials/edit/<int:pk>/', views.edit_testimonial, name='edit_testimonial'),
 
+    path('services/', views.service_list, name='service_list'),
+
 ]

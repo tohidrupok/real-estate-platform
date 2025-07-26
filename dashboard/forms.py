@@ -126,4 +126,11 @@ class DesignItemForm(forms.ModelForm):
 class ClientTestimonialForm(forms.ModelForm):
     class Meta:
         model = ClientTestimonial
-        fields = ['name', 'designation', 'message', 'photo', 'is_approved']
+        fields = ['name', 'designation', 'message', 'photo']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter name'}),
+            'designation': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter designation'}),
+            'message': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Write message'}),
+            'photo': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'is_approved': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }

@@ -1,7 +1,38 @@
-<h2>Edit Testimonial</h2>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save Changes</button>
-</form>
-<a href="{% url 'testimonial_dashboard' %}">Back</a>
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<!-- Breadcrumb -->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content text-center">
+            <h1 class="breadcumb-title">Edit Testimonial</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>Edit Testimonial</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Form Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="mb-4 text-warning fw-bold">✏️ Edit Testimonial</h2>
+
+        <div class="card shadow-sm p-4">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+                <a href="{% url 'testimonial_dashboard' %}" class="btn btn-secondary ms-2">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

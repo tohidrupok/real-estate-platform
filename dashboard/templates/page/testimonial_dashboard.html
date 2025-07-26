@@ -1,42 +1,89 @@
-<h2>Client Testimonials</h2>
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
 
-<table border="1" cellpadding="10">
-    <tr>
-        <th>Photo</th>
-        <th>Name</th>
-        <th>Designation</th>
-        <th>Message</th>
-        <th>Actions</th>
-    </tr>
-    {% for testimonial in testimonials %}
-    <tr>
-        <td>
-            {% if testimonial.photo %}
-                <img src="{{ testimonial.photo.url }}" width="50" height="50">
-            {% else %}
-                N/A
-            {% endif %}
-        </td>
-        <td>{{ testimonial.name|truncatechars:20 }}</td>
-        <td>{{ testimonial.designation }}</td>
-        <td>{{ testimonial.message|truncatechars:100 }}</td>
-        <td>
-            <a href="{% url 'edit_testimonial' testimonial.pk %}">Edit</a> |
-            <a href="{% url 'delete_testimonial' testimonial.pk %}" onclick="return confirm('Delete this testimonial?')">Delete</a>
-        </td>
-    </tr>
-    {% empty %}
-    <tr>
-        <td colspan="5">No testimonials yet.</td>
-    </tr>
-    {% endfor %}
-</table>
+<!-- Breadcrumb -->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content text-center">
+            <h1 class="breadcumb-title">Client Testimonials</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>Testimonials Dashboard</li>
+            </ul>
+        </div>
+    </div>
+</div>
 
-<hr>
+<!-- Dashboard Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-success fw-bold">Client Testimonials</h2>
+            <a href="#testimonial-form" class="btn btn-success">
+                <i class="fas fa-plus-circle"></i> Add New
+            </a>
+        </div>
 
-<h3>Add New Testimonial</h3>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Add Testimonial</button>
-</form>
+        <!-- Testimonials Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle shadow-sm">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th style="color: white;" scope="col">Photo</th>
+                        <th style="color: white;" scope="col">Name</th>
+                        <th style="color: white;" scope="col">Designation</th>
+                        <th style="color: white;" scope="col">Message</th>
+                        <th style="color: white;" scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for testimonial in testimonials %}
+                    <tr>
+                        <td class="text-center">
+                            {% if testimonial.photo %}
+                                <img src="{{ testimonial.photo.url }}" class="rounded-circle" width="50" height="50" alt="Photo">
+                            {% else %}
+                                <span class="text-muted">N/A</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ testimonial.name|truncatechars:20 }}</td>
+                        <td>{{ testimonial.designation }}</td>
+                        <td>{{ testimonial.message|truncatechars:100 }}</td>
+                        <td class="text-center">
+                            <div class="d-flex justify-content-center gap-2">
+                                <a href="{% url 'edit_testimonial' testimonial.pk %}" class="btn btn-sm btn-warning" title="Edit Testimonial">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'delete_testimonial' testimonial.pk %}" class="btn btn-sm btn-danger" title="Delete Testimonial" onclick="return confirm('Are you sure you want to delete this testimonial?')">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">No testimonials yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Add New Testimonial -->
+        <div id="testimonial-form" class="mt-5">
+            <h3 class="fw-bold mb-3 text-success">Add New Testimonial</h3>
+            <div class="card p-4 shadow-sm">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-success mt-2">
+                        <i class="fas fa-paper-plane"></i> Submit
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

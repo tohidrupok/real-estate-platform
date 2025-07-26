@@ -424,10 +424,10 @@ def edit_testimonial(request, pk):
 
 
 def service_list(request):
-    service_list = Service.objects.all().order_by('-created_at')
-    paginator = Paginator(service_list, 6)  # 6 per page
+    service_list = Service.objects.all()
+    paginator = Paginator(service_list, 10)  
 
     page_number = request.GET.get('page')
     services = paginator.get_page(page_number)
 
-    return render(request, 'your_app/services.html', {'services': services})
+    return render(request, 'page/services.html', {'services': services})

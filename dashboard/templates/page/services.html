@@ -1,0 +1,72 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<div class="breadcumb-wrapper " data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content">
+            <h1 class="breadcumb-title">Our Services</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>Our Services</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<section class="overflow-hidden space space-extra-bottom" id="service-sec">
+    <div class="container">
+        <div class="row gy-40 justify-content-center">
+            {% for service in services %}
+            <div class="col-xl-4 col-md-6 fadeinup wow">
+                <div class="service-card">
+                    <div class="box-thumb">
+                        <a href="#">
+                         
+                            <img src="{{ service.image.url }}" alt="{{ service.name }}" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px;">
+
+                        </a>
+                    </div>
+                    <div class="box-content">
+                        <div class="icon-wrap">
+                            <div class="icon">
+                                <img src="{% static 'assets/img/icon/why-icon-1-1.svg' %}" alt="icon">
+                            </div>
+                            <div class="number">
+                                <h3>{{ forloop.counter }}</h3>
+                            </div>
+                        </div>
+                        <h3 class="box-title"><a href="#">{{ service.name }}</a></h3>
+                        <p class="box-text">{{ service.description|truncatechars:200 }}</p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center">No services available at this time.</p>
+            {% endfor %}
+
+            <div class="col-12 text-center mt-50">
+                <div class="th-pagination">
+                    <ul>
+                        {% if services.has_previous %}
+                            <li><a href="?page={{ services.previous_page_number }}"><i class="far fa-arrow-left"></i></a></li>
+                        {% endif %}
+
+                        {% for num in services.paginator.page_range %}
+                            <li {% if services.number == num %}class="active"{% endif %}>
+                                <a href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                        {% endfor %}
+
+                        {% if services.has_next %}
+                            <li><a href="?page={{ services.next_page_number }}"><i class="far fa-arrow-right"></i></a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -392,8 +392,8 @@
                                         <a href="#">Pages</a>
                                         <ul class="sub-menu">
                                             <li><a href="{% url 'gallery' %}">Gallery Page</a></li>
-                                            <li><a href="service.html">Service Page</a></li>
-                                            <li><a href="neighborhood-guide.html">Neighborhood Guide</a></li>
+                                            <li><a href="{% url 'service_list' %}"">Service Page</a></li>
+                                            {% comment %} <li><a href="neighborhood-guide.html">Neighborhood Guide</a></li> {% endcomment %}
                                             <li><a href="{% url 'faq' %}">Faq Page</a></li>
                                         </ul>
                                     </li>

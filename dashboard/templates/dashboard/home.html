@@ -1111,81 +1111,79 @@ Gallery Area
     </div><!--==============================
 Cites Explore Area  
 ==============================-->
-<section class="explore-cites-sec overflow-hidden">
-    <div class="container-fluid p-0">
-        <div class="row flex-row-reverse">
-            <div class="col-xl-12">
+    <section class="explore-cites-sec overflow-hidden">
+        <div class="container-fluid p-0">
+            <div class="row flex-row-reverse">
+                <div class="col-xl-12">
 
-                {% for property in properties|slice:":1" %}
-                <div class="explore-single-item">
-                    <div class="main-container">
-                        <!-- Main Panorama Slider -->
-                        <div class="swiper th-slider panoramaSlide1" id="panoramaSlide1_{{ forloop.counter }}" data-slider-options='{"effect":"fade", "autoplay": true, "loop": true, "speed": 1000, "allowTouchMove": false, "simulateTouch": false}'>
-                            <div class="swiper-wrapper">
-                                {% for image in property.images.all|slice:":3" %}
-                                <div class="swiper-slide">
-                                    <div class="explore-single-slide">
-                                        <img src="{{ image.image.url }}" alt="img">
+                    {% for property in properties|slice:":1" %}
+                    <div class="explore-single-item">
+                        <div class="main-container">
+                            <!-- Main Panorama Slider -->
+                            <div class="swiper th-slider panoramaSlide1" id="panoramaSlide1_{{ forloop.counter }}" data-slider-options='{"effect":"fade", "autoplay": true, "loop": true, "speed": 1000, "allowTouchMove": false, "simulateTouch": false}'>
+                                <div class="swiper-wrapper">
+                                    {% for image in property.images.all|slice:":3" %}
+                                    <div class="swiper-slide">
+                                        <div class="explore-single-slide">
+                                            <img src="{{ image.image.url }}" alt="img">
+                                        </div>
+                                    </div>
+                                    {% empty %}
+                                    <div class="swiper-slide">
+                                        <div class="explore-single-slide">
+                                            <img src="{% static 'assets/img/explore-cites/explore-cites-bg-1.jpeg' %}" alt="img">
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <button data-slider-prev="#panoramaSlide1_{{ forloop.counter }}" class="slider-arrow slider-prev style3"><i class="far fa-arrow-left"></i></button>
+                                <button data-slider-next="#panoramaSlide1_{{ forloop.counter }}" class="slider-arrow slider-next style3"><i class="far fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="icon-wrap add-explore-city-icon">
+                            <div class="animation">
+                                <i class="fa-solid fa-plus"></i>
+                            </div>
+                        </div>
+
+                        <div class="popular-list-1 explore-card">
+                            <div class="property-content">
+                                <div class="media-body">
+                                    <h3 class="box-title"><a href="">{{ property.name }}</a></h3>
+                                    <h5 class="price">৳ {{ property.price }} <span class="month">/month</span></h5>
+                                    <p class="box-text">{{ property.description|truncatewords:20 }}</p>
+                                </div>
+
+                                <div class="bottom-wrap">
+                                    <ul class="property-featured">
+                                        <li>
+                                            <div class="icon"><img src="{% static 'assets/img/icon/bed.svg' %}" alt="icon"></div>
+                                            Bed {{ property.bedroom }}
+                                        </li>
+
+                                        <li>
+                                            <div class="icon"><img src="{% static 'assets/img/icon/bath.svg' %}" alt="icon"></div>
+                                            Bath {{ property.bath  }}
+                                        </li>
+                                        <li>
+                                            <div class="icon"><img src="{% static 'assets/img/icon/sqft.svg' %}" alt="icon"></div>
+                                            {{ property.sqft }} sqft
+                                        </li>
+                                    </ul>
+                                    <div class="property-bottom">
+                                        <a class="th-btn sm style3 pill" href="">View More</a>
                                     </div>
                                 </div>
-                                {% empty %}
-                                <div class="swiper-slide">
-                                    <div class="explore-single-slide">
-                                        <img src="{% static 'assets/img/explore-cites/explore-cites-bg-1.jpeg' %}" alt="img">
-                                    </div>
-                                </div>
-                                {% endfor %}
-                            </div>
-                            <button data-slider-prev="#panoramaSlide1_{{ forloop.counter }}" class="slider-arrow slider-prev style3"><i class="far fa-arrow-left"></i></button>
-                            <button data-slider-next="#panoramaSlide1_{{ forloop.counter }}" class="slider-arrow slider-next style3"><i class="far fa-arrow-right"></i></button>
-                        </div>
-                    </div>
-
-                    <div class="icon-wrap add-explore-city-icon">
-                        <div class="animation">
-                            <i class="fa-solid fa-plus"></i>
-                        </div>
-                    </div>
-
-                    <div class="popular-list-1 explore-card">
-                        <div class="property-content">
-                            <div class="media-body">
-                                <h3 class="box-title"><a href="">{{ property.name }}</a></h3>
-                                <h5 class="price">৳ {{ property.price }} <span class="month">/month</span></h5>
-                                <p class="box-text">{{ property.description|truncatewords:20 }}</p>
-                            </div>
-
-                            <div class="bottom-wrap">
-                                <ul class="property-featured">
-                                    <li>
-                                        <div class="icon"><img src="{% static 'assets/img/icon/bed.svg' %}" alt="icon"></div>
-                                        Bed {{ property.bedroom }}
-                                    </li>
-
-                                    <li>
-                                        <div class="icon"><img src="{% static 'assets/img/icon/bath.svg' %}" alt="icon"></div>
-                                        Bath {{ property.bath  }}
-                                    </li>
-                                    <li>
-                                        <div class="icon"><img src="{% static 'assets/img/icon/sqft.svg' %}" alt="icon"></div>
-                                        {{ property.sqft }} sqft
-                                    </li>
-                                </ul>
-                                <div class="property-bottom">
-                                    <a class="th-btn sm style3 pill" href="">View More</a>
-                                </div>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
+
                 </div>
-                {% endfor %}
-
             </div>
         </div>
-    </div>
-</section>
-
-
+    </section>
 
     <!--==============================
 Team Area  
@@ -1260,70 +1258,70 @@ Team Area
     </section><!--==============================
 Testimonial Area  
 ==============================-->
-           <section class="testi-card-area-1 bg-smoke space bg-smoke overflow-hidden" data-bg-src="{% static 'assets/img/bg/property-values-bg-shape.png' %}">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-xl-7">
-                <div class="title-area text-center">
-                    <p class="sub-title fadeinup wow" data-wow-duration="1.5s" data-wow-delay="0.1s">
-                        <span class="double-line"></span>Testimonials
-                    </p>
-                    <h2 class="sec-title fadeinup wow" data-wow-duration="1.5s" data-wow-delay="0.3s">What Our Client Says</h2>
+    <section class="testi-card-area-1 bg-smoke space bg-smoke overflow-hidden" data-bg-src="{% static 'assets/img/bg/property-values-bg-shape.png' %}">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-xl-7">
+                    <div class="title-area text-center">
+                        <p class="sub-title fadeinup wow" data-wow-duration="1.5s" data-wow-delay="0.1s">
+                            <span class="double-line"></span>Testimonials
+                        </p>
+                        <h2 class="sec-title fadeinup wow" data-wow-duration="1.5s" data-wow-delay="0.3s">What Our Client Says</h2>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row gy-4 justify-content-center">
-            <div class="testi-card-slide">
-                <div class="swiper has-shadow th-slider" id="testiSlide1" data-slider-options='{"centeredSlides":true,"paginationType": "progressbar","loop":true,"breakpoints":{"0":{"slidesPerView":1},"576":{"slidesPerView":"1"},"768":{"slidesPerView":"1"},"992":{"slidesPerView":"2"},"1200":{"slidesPerView":"2"}, "1300":{"slidesPerView":"2.6"},"1500":{"slidesPerView":"3.6"}}}'>
-                    <div class="swiper-wrapper">
+            <div class="row gy-4 justify-content-center">
+                <div class="testi-card-slide">
+                    <div class="swiper has-shadow th-slider" id="testiSlide1" data-slider-options='{"centeredSlides":true,"paginationType": "progressbar","loop":true,"breakpoints":{"0":{"slidesPerView":1},"576":{"slidesPerView":"1"},"768":{"slidesPerView":"1"},"992":{"slidesPerView":"2"},"1200":{"slidesPerView":"2"}, "1300":{"slidesPerView":"2.6"},"1500":{"slidesPerView":"3.6"}}}'>
+                        <div class="swiper-wrapper">
 
-                        {% for testimonial in testimonials %}
-                        <div class="swiper-slide">
-                            <div class="testi-block" dir="ltr">
-                                <div class="top-wrap">
-                                    <div class="quote">
-                                        <img src="{% static 'assets/img/icon/quote.svg' %}" alt="quote">
+                            {% for testimonial in testimonials %}
+                            <div class="swiper-slide">
+                                <div class="testi-block" dir="ltr">
+                                    <div class="top-wrap">
+                                        <div class="quote">
+                                            <img src="{% static 'assets/img/icon/quote.svg' %}" alt="quote">
+                                        </div>
+                                        <div class="logo">
+                                            <img src="{% static 'assets/img/icon/brand-logo-1.png' %}" alt="Team">
+                                        </div>
                                     </div>
-                                    <div class="logo">
-                                        <img src="{% static 'assets/img/icon/brand-logo-1.png' %}" alt="Team">
+                                    <div class="testi-content">
+                                        <p class="box-text">“{{ testimonial.message }}”</p>
                                     </div>
-                                </div>
-                                <div class="testi-content">
-                                    <p class="box-text">“{{ testimonial.message }}”</p>
-                                </div>
-                                <div class="bottom-wrap">
-                                    <div class="content">
-                                        <h3 class="box-title">{{ testimonial.name|truncatechars:18 }}</h3>
-                                        <p class="text">{{ testimonial.designation }}</p>
-                                    </div>
-                                    <div class="team-img">
-                                        {% if testimonial.photo %}
-                                            <img src="{{ testimonial.photo.url }}" alt="{{ testimonial.name }}">
-                                        {% else %}
-                                            <img src="{% static 'assets/img/testimonial/default.jpg' %}" alt="Default">
-                                        {% endif %}
-                                        <div class="box-review">
-                                            <i class="fa-sharp fa-solid fa-star"></i>
-                                            <div class="rating"><span>4.8</span></div>  <!-- Optional: Static or dynamic -->
+                                    <div class="bottom-wrap">
+                                        <div class="content">
+                                            <h3 class="box-title">{{ testimonial.name|truncatechars:20 }}</h3>
+                                            <p class="text">{{ testimonial.designation }}</p>
+                                        </div>
+                                        <div class="team-img">
+                                            {% if testimonial.photo %}
+                                                <img src="{{ testimonial.photo.url }}" alt="{{ testimonial.name }}">
+                                            {% else %}
+                                                <img src="{% static 'assets/img/testimonial/default.jpg' %}" alt="Default">
+                                            {% endif %}
+                                            <div class="box-review">
+                                                <i class="fa-sharp fa-solid fa-star"></i>
+                                                <div class="rating"><span>4.8</span></div>  
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            {% endfor %}
+
                         </div>
-                        {% endfor %}
 
-                    </div>
-
-                    <div class="slider-controller container-width">
-                        <button data-slider-prev="#testiSlide1" class="slider-arrow default slider-prev"><i class="far fa-arrow-left"></i></button>
-                        <div class="slider-pagination" data-slider-id="#testiSlider1"></div>
-                        <button data-slider-next="#testiSlide1" class="slider-arrow default slider-next"><i class="far fa-arrow-right"></i></button>
+                        <div class="slider-controller container-width">
+                            <button data-slider-prev="#testiSlide1" class="slider-arrow default slider-prev"><i class="far fa-arrow-left"></i></button>
+                            <div class="slider-pagination" data-slider-id="#testiSlider1"></div>
+                            <button data-slider-next="#testiSlide1" class="slider-arrow default slider-next"><i class="far fa-arrow-right"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
   <!--==============================
 Blog Area  

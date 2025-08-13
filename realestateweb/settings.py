@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-7a)s=@=$2x(6myu%j%17jf_9wz74v2@ri(pux9ir$4ont1kk13
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+# ALLOWED_HOSTS = ['btpweb.bkonsoft.com','www.btpweb.bkonsoft.com']
  
 # Application definition
 

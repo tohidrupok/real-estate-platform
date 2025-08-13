@@ -1,0 +1,438 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<!-- Breadcumb -->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content text-center">
+            <h1 class="breadcumb-title">Investor Policy</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>Investor Policy</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- BTP Investor Policy Content -->
+  <style>
+    :root {
+      --btp-primary-500: #0d6efd;
+      --btp-primary-700: #003f9a;
+      --btp-muted: #6c757d;
+      --btp-soft-bg: #f8f9fb;
+      --btp-radius: 14px;
+    }
+
+    body {
+      background: #f4f6fb;
+      color: #1f2937;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* HERO */
+    .btp-hero {
+      background: linear-gradient(135deg, rgba(13,110,253,0.95) 0%, rgba(0,4,40,0.95) 100%);
+      color: #fff;
+      padding: 56px 20px;
+      border-radius: var(--btp-radius);
+      margin-top: 28px;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.18);
+    }
+    .btp-hero h1 {
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .btp-hero p.lead {
+      opacity: 0.92;
+    }
+
+    /* Section titles */
+    .btp-section-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .btp-section-title .btp-line {
+      width: 6px;
+      height: 36px;
+      background: var(--btp-primary-500);
+      border-radius: 6px;
+    }
+    .btp-policy-card {
+      border-radius: var(--btp-radius);
+      background: #fff;
+      box-shadow: 0 6px 18px rgba(22,28,45,0.06);
+      border: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .btp-policy-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 34px rgba(22,28,45,0.10);
+    }
+
+    .btp-badge-round {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, var(--btp-primary-500), var(--btp-primary-700));
+      color: #fff;
+      font-weight: 700;
+      box-shadow: 0 6px 18px rgba(13,110,253,0.18);
+    }
+
+    .btp-feature-soft {
+      background: linear-gradient(180deg, #ffffff, #fbfdff);
+      border-radius: var(--btp-radius);
+      padding: 18px;
+      border: 1px solid rgba(15,23,42,0.03);
+    }
+
+    .btp-cta {
+      background: linear-gradient(90deg, var(--btp-primary-500), var(--btp-primary-700));
+      color: #fff;
+      border-radius: var(--btp-radius);
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(13,110,253,0.14);
+    }
+
+    footer.btp-footer-small {
+      color: var(--btp-muted);
+      padding: 30px 0;
+      text-align: center;
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 767px) {
+      .btp-hero {
+        padding: 36px 14px;
+      }
+      .btp-badge-round {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  </style>
+  
+<div class="container">
+
+  <!-- HERO -->
+  <div class="btp-hero mt-4">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <h1 class="display-6">BTP — Investor Policy</h1>
+        <p style="color: white;" class="lead mb-2">Comprehensive guidance on investing in Bangladesh real estate — strategies, risks, and how BTP supports investors.</p>
+          <div class="d-flex gap-2 align-items-center mt-3">
+            <a href="tel:+8809639246230" class="btn btn-light btn-lg"><i class="bi bi-telephone-fill me-2"></i> +8809639246230</a>
+            <a target="_blank" href="https://wa.me/8801913222203?text=Hello%20BTP%20team,%0A%0AI%20am%20interested%20in%20investing%20in%20your%20property%20offerings.%20Could%20you%20please%20share%20more%20details%20and%20guidance%20on%20how%20to%20proceed%3F%0A%0ALooking%20forward%20to%20your%20response.%0A%0AThank%20you!" class="btn btn-outline-light btn-lg">
+              <i class="bi bi-envelope-fill me-2"></i> Send on WhatsApp
+            </a>
+
+          </div>
+      </div>
+      <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+        <div style="max-width:220px; margin-left:auto;">
+          <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&s=6b6b39b4ea2c5e9f4c7ae5fb2e6e4f73" 
+               alt="real estate" class="img-fluid rounded" style="box-shadow: 0 14px 30px rgba(2,6,23,0.12);">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN LAYOUT -->
+  <div class="row mt-4 g-4">
+
+    <!-- LEFT: main content -->
+    <div class="col-lg-8">
+
+      <!-- Top 6 ways -->
+      <section class="mb-4">
+        <div class="btp-section-title">
+          <div class="btp-line"></div>
+          <div>
+            <h4 class="mb-0">Top 6 Ways to Invest in Real Estate</h4>
+            <small class="text-muted">Pick the route that matches your capital, time and risk appetite.</small>
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="btp-policy-card p-3 h-100">
+              <div class="d-flex gap-3 align-items-start">
+                <div class="btp-badge-round">1</div>
+                <div>
+                  <h6 class="mb-1">Residential Property</h6>
+                  <p class="mb-0 text-muted small">Houses, flats & apartments — steady rental income and long-term capital appreciation in city markets.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="btp-policy-card p-3 h-100">
+              <div class="d-flex gap-3 align-items-start">
+                <div class="btp-badge-round">2</div>
+                <div>
+                  <h6 class="mb-1">Commercial Property</h6>
+                  <p class="mb-0 text-muted small">Office spaces & retail — higher yields, suited for investors seeking scale and active management.</p>
+                </div>
+              </div>
+            </div>
+          </div> 
+
+          <div class="col-md-6">
+            <div class="btp-policy-card p-3 h-100">
+              <div class="d-flex gap-3 align-items-start">
+                <div class="btp-badge-round">3</div>
+                <div>
+                  <h6 class="mb-1">REITs</h6>
+                  <p class="mb-0 text-muted small">Real Estate Investment Trusts — passive exposure without managing physical assets; great for beginners.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="btp-policy-card p-3 h-100">
+              <div class="d-flex gap-3 align-items-start">
+                <div class="btp-badge-round">4</div>
+                <div>
+                  <h6 class="mb-1">Crowdfunding</h6>
+                  <p class="mb-0 text-muted small">Pool small tickets to participate in larger projects — diversify while keeping initial investment low.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="btp-policy-card p-3 h-100">
+              <div class="d-flex gap-3 align-items-start">
+                <div class="btp-badge-round">5</div>
+                <div>
+                  <h6 class="mb-1">Land Investment</h6>
+                  <p class="mb-0 text-muted small">Buy land in emerging zones — long-term appreciation and development potential.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="btp-policy-card p-3 h-100">
+              <div class="d-flex gap-3 align-items-start">
+                <div class="btp-badge-round">6</div>
+                <div>
+                  <h6 class="mb-1">Online Platforms</h6>
+                  <p class="mb-0 text-muted small">Use curated marketplaces to access larger commercial deals with smaller capital — choose trusted platforms.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Key factors -->
+      <section class="mb-4">
+        <div class="btp-section-title">
+          <div class="btp-line"></div>
+          <div>
+            <h4 class="mb-0">Key Factors Before Investing</h4>
+            <small class="text-muted">Must-check items to protect capital & maximise returns.</small>
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="btp-feature-soft">
+              <h6 class="mb-1">Location & Market Trends</h6>
+              <p class="small text-muted mb-0">Dhaka, Chittagong and transit corridors generally show high demand. Track upcoming infrastructure and urban plans.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="btp-feature-soft">
+              <h6 class="mb-1">Zoning & Regulations</h6>
+              <p class="small text-muted mb-0">Confirm permitted use, future land-use plans and regulatory restrictions to avoid surprises.</p>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="btp-feature-soft">
+              <h6 class="mb-1">Infrastructure Development</h6>
+              <p class="small text-muted mb-0">Proximity to roads, schools and hospitals drives long-term value — favour projects near reliable infrastructure.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="btp-feature-soft">
+              <h6 class="mb-1">Risk Tolerance</h6>
+              <p class="small text-muted mb-0">Assess liquidity needs, holding period and volatility appetite before choosing asset type and leverage.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- How to start + benefits -->
+      <section class="mb-4">
+        <div class="btp-section-title">
+          <div class="btp-line"></div>
+          <div>
+            <h4 class="mb-0">How to Start & Financial Benefits</h4>
+            <small class="text-muted">Practical first steps and why real estate strengthens your portfolio.</small>
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-md-7">
+            <div class="btp-policy-card p-3">
+              <h6 class="mb-2">Steps to begin</h6>
+              <ol class="small text-muted mb-0">
+                <li>Assess finances: savings, credit & borrowing capacity.</li>
+                <li>Research market: rental yields, price trends, demand pockets.</li>
+                <li>Choose property type: start with residential or REITs for simplicity.</li>
+                <li>Work with trusted developers and legal experts (BTP helps with due diligence).</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="col-md-5">
+            <div class="btp-policy-card p-3 text-center">
+              <i class="bi bi-graph-up fs-1 text-primary"></i>
+              <h6 class="mt-2 mb-1">Financial Benefits</h6>
+              <p class="small text-muted mb-0">Long-term appreciation, portfolio diversification, and tax benefits when applicable — consult a tax advisor.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Challenges -->
+      <section class="mb-4">
+        <div class="btp-section-title">
+          <div class="btp-line"></div>
+          <div>
+            <h4 class="mb-0">Common Challenges</h4>
+            <small class="text-muted">Know these to manage risk effectively.</small>
+          </div>
+        </div>
+
+        <div class="btp-policy-card p-3">
+          <div class="row g-3">
+            <div class="col-md-4 text-center">
+              <i class="bi bi-file-earmark-break fs-1 text-danger"></i>
+              <h6 class="mt-2">Legal Issues</h6>
+              <p class="small text-muted">Title disputes or unclear ownership — always verify documents and engage lawyers.</p>
+            </div>
+            <div class="col-md-4 text-center">
+              <i class="bi bi-arrow-repeat fs-1 text-warning"></i>
+              <h6 class="mt-2">Market Fluctuations</h6>
+              <p class="small text-muted">Property cycles and demand shifts — diversify and plan horizon accordingly.</p>
+            </div>
+            <div class="col-md-4 text-center">
+              <i class="bi bi-bank2 fs-1 text-info"></i>
+              <h6 class="mt-2">Financing</h6>
+              <p class="small text-muted">Loan availability and rates vary — seek expert financial advice for structuring deals.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Why choose BTP -->
+      <section class="mb-5">
+        <div class="btp-section-title">
+          <div class="btp-line"></div>
+          <div>
+            <h4 class="mb-0">Why Choose BTP</h4>
+            <small class="text-muted">Our commitment to transparency, location selection and quality delivery.</small>
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="btp-feature-soft">
+              <h6 class="mb-1">Prime Locations</h6>
+              <p class="small text-muted mb-0">Focus on high-demand areas to maximize ROI.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="btp-feature-soft">
+              <h6 class="mb-1">Trusted Expertise</h6>
+              <p class="small text-muted mb-0">Years of experience and dedicated investor services.</p>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="btp-feature-soft">
+              <h6 class="mb-1">Modern Amenities</h6>
+              <p class="small text-muted mb-0">Projects with contemporary facilities & smart township planning.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="btp-feature-soft">
+              <h6 class="mb-1">Diverse Options</h6>
+              <p class="small text-muted mb-0">From luxury to commercial — solutions for different investor goals.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div> <!-- /.col-lg-8 -->
+
+    <!-- RIGHT: sidebar -->
+    <aside class="col-lg-4">
+
+      <div class="btp-policy-card p-3 mb-3">
+        <h6 class="mb-2">Quick Contact</h6>
+        <p class="small text-muted mb-1">Speak with a BTP investment advisor</p>
+        <p class="mb-1"><strong>Phone:</strong> <a href="tel:+8809612008800">+8809639246230</a></p>
+        <p class="mb-1"><strong>Email:</strong> <a href="mailto:invest@btp.com">invest@btp.com</a></p>
+        <a href="tel:+8809639246230" class="btn btn-primary w-100 mt-2"><i class="bi bi-telephone-fill me-2"></i>Call Now</a>
+        
+      </div>
+
+      <div class="btp-policy-card p-3 mb-3">
+        <h6 class="mb-2">Download Guide</h6>
+        <p class="small text-muted">Get a PDF summary of investor best practices.</p>
+        <a class="btn btn-outline-primary w-100" href="#" onclick="alert('PDF download not configured in demo'); return false;">
+          <i class="bi bi-download me-2"></i>Download PDF
+        </a>
+      </div>
+
+      <div class="btp-policy-card p-3">
+        <h6 class="mb-2">Latest Opportunities</h6>
+        <div class="small text-muted">
+          <ul class="mb-0">
+            <li>Uttara — Mixed-use township (Limited units)</li>
+            <li>Bashundhara — New apartment launch</li>
+            <li>Gulshan — Commercial office floors</li>
+          </ul>
+        </div>
+      </div>
+
+    </aside>
+
+  </div> <!-- /.row -->
+
+  <!-- CTA / Footer block -->
+  <div class="row mt-5">
+    <div class="col-12">
+      <div class="btp-cta d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+        <div>
+          <h5 class="mb-1">Ready to invest with BTP?</h5>
+          <p style="color: white;"  class="mb-0 small">Schedule a free consultation — we'll help you choose the right property, financing & exit plan.</p>
+        </div>
+        <div class="d-flex gap-2">
+          <a href="tel:+8809639246230" class="btn btn-light btn-lg"><i class="bi bi-telephone-fill me-2"></i> +8809639246230</a>
+          <a target="_blank" href="https://wa.me/8801913222203?text=Hello%20BTP%20team,%0A%0AI%20am%20interested%20in%20investing%20in%20your%20property%20offerings.%20Could%20you%20please%20share%20more%20details%20and%20guidance%20on%20how%20to%20proceed%3F%0A%0ALooking%20forward%20to%20your%20response.%0A%0AThank%20you!" class="btn btn-outline-light btn-lg">
+                      <i class="bi bi-envelope-fill me-2"></i> Send on WhatsApp
+          </a> 
+        </div>
+      </div>
+    </div>
+  </div>
+  <br><br>
+</div> 
+
+{% endblock %}

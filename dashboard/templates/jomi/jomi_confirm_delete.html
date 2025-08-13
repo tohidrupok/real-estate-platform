@@ -1,0 +1,44 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<!-- Breadcumb -->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content text-center">
+            <h1 class="breadcumb-title">Delete Property</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>Delete Property</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Section -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-lg rounded-4">
+                    <div class="card-body p-5 text-center">
+                        <i class="fas fa-exclamation-triangle fa-3x text-danger mb-4"></i>
+                        <h2>Delete Jomi</h2>
+                        <p>Are you sure you want to delete "{{ jomi.title }}"?</p>
+
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                            <a href="{% url 'jomi_list' %}" class="btn btn-secondary">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+
+

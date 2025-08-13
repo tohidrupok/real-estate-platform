@@ -1,0 +1,87 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<!-- Breadcumb -->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content text-center">
+            <h1 class="breadcumb-title">{% if form.instance.pk %}Update{% else %}Create{% endif %} Land</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>{% if form.instance.pk %}Update{% else %}Create{% endif %} Land</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Land Form -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-lg rounded-4 border-0 p-4">
+
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                    {% endif %}
+
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        {{ form.non_field_errors }}
+
+                        {% for field in form %}
+                        <div class="col-md-6">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="text-danger small">{{ field.errors.as_text|striptags }}</div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+
+                        <!-- Existing images -->
+                        {% if jomi and jomi.images.all %}
+                        <div class="col-md-12 mt-3">
+                            <label class="form-label">Existing Images</label>
+                            <div class="row">
+                                {% for image in jomi.images.all %}
+                                <div class="col-md-3 position-relative mb-3">
+                                    <img src="{{ image.image.url }}" class="img-thumbnail" style="height:150px; object-fit: cover;">
+                                    <form method="POST" action="{% url 'jomi_image_delete' image.pk %}" style="position:absolute; top:5px; right:5px;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this image?')">&times;</button>
+                                    </form>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <!-- Upload images -->
+                        <div class="col-md-12">
+                            <label class="form-label mt-3">Upload Images</label>
+                            <input type="file" name="images" multiple class="form-control">
+                            <small class="text-muted">You can select multiple images</small>
+                        </div>
+
+                        <div class="col-12 mt-4 text-center">
+                            <button type="submit" class="btn btn-primary px-5">Save</button>
+                            <a href="{% url 'jomi_list' %}" class="btn btn-outline-secondary ms-2">Cancel</a>
+                        </div>
+                    </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+
+

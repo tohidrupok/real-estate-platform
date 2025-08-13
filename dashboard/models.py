@@ -1,16 +1,28 @@
 from django.db import models
 from django.utils.text import slugify 
 
+class Feature(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
 
 class Property(models.Model):
+    
+    STATUS_CHOICES = [
+        ('ongoing', 'On Going'),
+        ('ready_flat', 'Ready Flat'),
+        ('complete', 'Complete Project'),
+        ('upcoming', 'Upcoming'),
+    ]
     name = models.CharField(max_length=255, verbose_name="Property Name")
     id_no = models.CharField(max_length=50, unique=True, verbose_name="ID NO.")
-    type = models.CharField(max_length=100, verbose_name="Type")  # e.g., Residential, Commercial
-    purpose = models.CharField(max_length=100, verbose_name="Purpose")  # e.g., For Rent, For Sale
-    price = models.DecimalField(max_digits=12, decimal_places=2, verbose_name="Price")
-    sqft = models.PositiveIntegerField(verbose_name="Square Feet")
+    type = models.CharField(max_length=100, verbose_name="Type") 
+    purpose = models.CharField(max_length=100, verbose_name="Purpose") 
+    price = models.DecimalField(max_digits=12, decimal_places=2, verbose_name="Price", null=True, blank=True)
+    sqft = models.CharField(max_length=50, verbose_name="Square Feet")
     featured_sqft = models.PositiveIntegerField(verbose_name="Featured Sqft", null=True, blank=True)
-
+    unit = models.CharField(max_length=50, verbose_name="Units", null=True, blank=True)
     room = models.PositiveIntegerField(verbose_name="Total Rooms")
     bedroom = models.PositiveIntegerField(verbose_name="Bedrooms")
     bath = models.PositiveIntegerField(verbose_name="Bathrooms")
@@ -23,6 +35,10 @@ class Property(models.Model):
     built_in = models.PositiveIntegerField(verbose_name="Built Year", null=True, blank=True)
 
     address = models.TextField(verbose_name="Address", null=True, blank=True)
+    map_embed_url = models.URLField(verbose_name="Iframe Link Only", blank=True, null=True) 
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True, verbose_name="Latitude")
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True, verbose_name="Longitude")
+
 
     description_short = models.TextField(verbose_name="Short Description", null=True, blank=True)
     description_long = models.TextField(verbose_name="Long Description", null=True, blank=True)
@@ -36,11 +52,21 @@ class Property(models.Model):
     is_complete = models.BooleanField(default=False, verbose_name="Is Complete")
     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)
 
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft', verbose_name="Status")
+    features = models.ManyToManyField('Feature', blank=True, related_name='properties')
+    
     def __str__(self):
         return f"{self.name} ({self.id_no})"
 
     class Meta:
         ordering = ['-date_posted']
+    
+    @property
+    def map_embed_url(self):
+        """Generate Google Maps embed URL from latitude & longitude."""
+        if self.latitude and self.longitude:
+            return f"https://www.google.com/maps?q={self.latitude},{self.longitude}&hl=en&z=14&output=embed"
+        return ""
 
     
     def save(self, *args, **kwargs):
@@ -174,7 +200,7 @@ class Category(models.Model):
 class DesignItem(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="design_items")
     name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to="Interior/designs/")
+    image = models.ImageField(upload_to="Interior/designs/", null= True, blank= True)
     description = models.TextField(blank=True)
     is_featured = models.BooleanField(default=False)
 
@@ -188,6 +214,15 @@ class DesignItem(models.Model):
     def category_slug(self):
         return slugify(self.category.name)
 
+
+class DesignImage(models.Model):
+    design_item = models.ForeignKey(DesignItem, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to="Interior/designs/")
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Image for {self.design_item.name}" 
+    
 
 class ClientTestimonial(models.Model):
     name = models.CharField(max_length=100)
@@ -211,3 +246,65 @@ class Service(models.Model):
         return self.name 
     
     
+
+class ContactMessage(models.Model):
+    name = models.CharField(default="Customer",  max_length=100, blank=True, null=True)
+    number = models.CharField(max_length=20)
+    email = models.EmailField(blank=True, null=True)
+    subject = models.CharField(default="Contact me urgent", max_length=100, blank=True, null=True)
+    message = models.TextField( blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.subject}"
+ 
+
+class LandBooking(models.Model):
+    contact_number = models.CharField(max_length=20, verbose_name="Contact Number")  
+
+    customer_name = models.CharField(max_length=255, verbose_name="Customer Name", blank=True, null=True)
+    email = models.EmailField(verbose_name="Email", blank=True, null=True)
+    land_location = models.CharField(max_length=255, verbose_name="Land Location", blank=True, null=True)
+    land_size = models.CharField(max_length=50, verbose_name="Land Size", blank=True, null=True)
+    booking_date = models.DateField(verbose_name="Booking Date", blank=True, null=True)
+
+    status_choices = [
+        ('pending', 'Pending'),
+        ('confirmed', 'Confirmed'),
+        ('cancelled', 'Cancelled'),
+    ]
+    status = models.CharField(max_length=20, choices=status_choices, default='pending', blank=True, null=True)
+    notes = models.TextField(blank=True, null=True, verbose_name="Additional Notes")
+
+    def __str__(self):
+        return f"{self.contact_number} - {self.land_location or 'No Location'}"
+
+
+class Jomi(models.Model):
+    STATUS_CHOICES = [
+        ('available', 'Available'),
+        ('sold', 'Sold'),
+    ]
+
+    title = models.CharField(max_length=255)
+    description = models.TextField( null=True, blank=True)
+    price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    city = models.CharField(max_length=100, null=True, blank=True)
+    district = models.CharField(max_length=100, null=True, blank=True)
+    area_size = models.CharField(max_length=100, null=True, blank=True)  
+    address = models.CharField(max_length=255, blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='available')
+    contact_name = models.CharField(max_length=100, null=True, blank=True)
+    contact_phone = models.CharField(max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.title} - {self.city}"
+
+class JomiImage(models.Model):
+    jomi = models.ForeignKey(Jomi, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='jomi_images/')
+
+    def __str__(self):
+        return f"Image for {self.jomi.title}"

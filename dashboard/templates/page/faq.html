@@ -5,7 +5,7 @@
     Breadcumb
 ============================== -->
 
-    <div class="breadcumb-wrapper " data-bg-src="assets/img/bg/breadcrumb-bg.jpg">
+    <div class="breadcumb-wrapper " data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
         <div class="container">
             <div class="breadcumb-content">
                 <h1 class="breadcumb-title">FAQS</h1>
@@ -59,23 +59,52 @@ Faq Area
                         <div class="widget bg-smoke">
                             <h3 class="widget_title">Contact Us</h3>
                             <div class="contact-form-widget">
-                                <form action="#" class="newsletter-form">
-                                    <div class="form-group">
-                                        <input class="form-control" type="text" placeholder="Your Name" required="">
+                                 {% if messages %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            {{ message }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            
+                                <form method="post" novalidate>
+                                    {% csrf_token %}
+                                    {{ form.non_field_errors }}
+
+                                    <div class="mb-3">
+                                        {{ form.name.label_tag }}  
+                                        {{ form.name }}
+                                        {{ form.name.errors }}
                                     </div>
-                                    <div class="form-group">
-                                        <input class="form-control" type="email" placeholder="Your Email" required="">
+
+                                    <div class="mb-3">
+                                        {{ form.number.label_tag }}  
+                                        {{ form.number }}
+                                        {{ form.number.errors }}
                                     </div>
-                                    <div class="form-group">
-                                        <input class="form-control" type="text" placeholder="Your Phone" required="">
+
+                                    <div class="mb-3">
+                                        {{ form.email.label_tag }}  
+                                        {{ form.email }}
+                                        {{ form.email.errors }}
                                     </div>
-                                    <div class="form-group mb-4">
-                                        <textarea name="Your message" id="message" cols="30" rows="3" class="form-control" placeholder="Your Message"></textarea>
+
+                                    <div class="mb-3">
+                                        {{ form.subject.label_tag }}  
+                                        {{ form.subject }}
+                                        {{ form.subject.errors }}
                                     </div>
-                                    <div class="form-btn pt-2">
-                                        <button type="submit" class="th-btn radius">Send Us</button>
+
+                                    <div class="mb-3">
+                                        {{ form.message.label_tag }}  
+                                        {{ form.message }}
+                                        {{ form.message.errors }}
                                     </div>
+
+                                    <button type="submit" class="btn btn-primary">Send Message</button>
                                 </form>
+
                             </div>
                         </div>
                     </aside>
@@ -252,17 +281,6 @@ Faq Area
                                 </div>
                             </div>
 
-
-                            <div class="accordion-card ">
-                                <div class="accordion-header" id="collapse-item-15">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-15" aria-expanded="false" aria-controls="collapse-15"><span class="serial-numb">15. </span> How can businesses promote environmental sustainability in their operations?</button>
-                                </div>
-                                <div id="collapse-15" class="accordion-collapse collapse " aria-labelledby="collapse-item-15" data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">
-                                        <p class="faq-text"> Most Islamic centers offer charity programs, counseling, and financial assistance for those in need. Non-Muslims are welcome to visit mosques. They should dress modestly and remove their shoes upon entering. You can attend community events, volunteer at the mosque, join study circles, or participate in outreach programs.</p>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

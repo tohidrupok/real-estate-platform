@@ -6,7 +6,7 @@
     Breadcumb
 ============================== -->
 
-    <div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/blog/breadcrumb-bg.jpg' %}">
+    <div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
         <div class="container">
             <div class="breadcumb-content">
                 <h1 class="breadcumb-title">Property Details</h1>
@@ -62,12 +62,12 @@
                             <div class="page-content">
                                 <div class="property-meta-wrap mb-55 fadeinup wow">
                                     <div class="property-meta">
-                                        <a class="property-tag" href="blog.html">Featured</a>
-                                        <a href="blog.html"><i class="fa-solid fa-calendar-days"></i> {{ property.date_posted }} </a>
-                                        <a href="blog.html"><i class="fa-solid fa-comments"></i> {{ property.name }}</a>
+                                        <a class="property-tag" href="">Featured</a>
+                                        <a href=""><i class="fa-solid fa-calendar-days"></i> {{ property.date_posted }} </a>
+                                        <a href=""><i class="fa-solid fa-comments"></i> {{ property.name }}</a>
                                     </div>
                                     <div class="wishlist-icon">
-                                        <a href="wishlist.html" class="icon-btn"><i class="fa-solid fa-heart"></i></a>
+                                        <a href="" class="icon-btn"><i class="fa-solid fa-heart"></i></a>
                                     </div>
                                 </div>
                                 <div class="page-title-wrap fadeinup wow">
@@ -105,7 +105,7 @@
 
                                 <div class="hightlighes-title-wrap mb-25 fadeinup wow">
                                     <h2 class="page-title mb-2">Property Hightlights</h2>
-                                    <h5 class="house-sell"> House for sale </h5>
+                                    <h5 class="house-sell"> House for sale/rent </h5>
                                 </div>
 
                                 <ul class="property-grid-list fadeinup wow">
@@ -127,6 +127,27 @@
                                             <p class="property-grid-list-text">{{ property.purpose }}</p>
                                         </div>
                                     </li>
+
+                                    <li>
+                                        <div class="property-grid-list-icon">
+                                            <img src="{% static 'assets/img/icon/property-single-icon1-7.svg' %}" alt="img">
+                                        </div>
+                                        <div class="property-grid-list-details">
+                                            <h4 class="property-grid-list-title">Purpose</h4>
+                                            <p class="property-grid-list-text">{{ property.purpose }}</p>
+                                        </div>
+                                    </li>
+                                    
+                                    <li>
+                                        <div class="property-grid-list-icon">
+                                            <img src="{% static 'assets/img/icon/property-single-icon1-6.svg' %}" alt="img">
+                                        </div>
+                                        <div class="property-grid-list-details">
+                                            <h4 class="property-grid-list-title">Unit</h4>
+                                            <p class="property-grid-list-text">{{ property.unit }}</p>
+                                        </div>
+                                    </li> 
+
                                     <li>
                                         <div class="property-grid-list-icon">
                                             <img src="{% static 'assets/img/icon/property-single-icon1-3.svg' %}" alt="img">
@@ -154,24 +175,8 @@
                                             <p class="property-grid-list-text">{{ property.bath }}</p>
                                         </div>
                                     </li>
-                                    <li>
-                                        <div class="property-grid-list-icon">
-                                            <img src="{% static 'assets/img/icon/property-single-icon1-6.svg' %}" alt="img">
-                                        </div>
-                                        <div class="property-grid-list-details">
-                                            <h4 class="property-grid-list-title">Big Yard</h4>
-                                            <p class="property-grid-list-text">{{ property.big_yard }}</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="property-grid-list-icon">
-                                            <img src="{% static 'assets/img/icon/property-single-icon1-7.svg' %}" alt="img">
-                                        </div>
-                                        <div class="property-grid-list-details">
-                                            <h4 class="property-grid-list-title">Purpose</h4>
-                                            <p class="property-grid-list-text">{{ property.purpose }}</p>
-                                        </div>
-                                    </li>
+                                    
+                                    
                                     <li>
                                         <div class="property-grid-list-icon">
                                             <img src="{% static 'assets/img/icon/property-single-icon1-8.svg' %}" alt="img">
@@ -235,130 +240,37 @@
                                 </div>
                                 <h3 class="page-title mt-50 mb-25 fadeinup wow">Features & amenities</h3>
 
-                                <div class="fea-anim-checklist fadeinup wow">
-                                    <div class="checklist style2 list-six-column">
-                                        <ul>
-                                            <li>Airconditioning</li>
-                                            <li>Barbeque</li>
-                                            <li>24x7 Seccurity</li>
-                                            <li>Jaguzzi</li>
-                                            <li>Gym</li>
-                                            <li>Home Theater</li>
-                                            <li>Balcony</li>
-                                            <li>Recreation</li>
-                                            <li>Indoor Game</li>
-                                            <li>Modern Kitchen</li>
-                                            <li>Walk-in Closet</li>
-                                            <li>Wine Cellar</li>
-                                            <li>Garage</li>
-                                            <li>Microwave</li>
-                                            <li>Pool</li>
-                                            <li>Refrigerator</li>
-                                            <li>Yard</li>
-                                            <li>Skylight</li>
-                                            <li>Landscaping</li>
-                                            <li>Basketball</li>
-                                            <li>Tanis Courts</li>
-                                            <li>Window Covert</li>
-                                            <li>Smart Home Te</li>
-                                            <li>Sauna</li>
-                                            <li>Outdoor Kitchen</li>
-                                            <li>Fireplace</li>
-                                            <li>Indoor</li>
-                                            <li>Washer</li>
-                                            <li>Security</li>
-                                            <li>Patio</li>
-                                        </ul>
+                                {% if selected_features %}
+                                    <div class="fea-anim-checklist fadeinup wow">
+                                        <div class="checklist style2 list-six-column">
+                                            <ul>
+                                                {% for feature in selected_features %}
+                                                    <li>{{ feature.name }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                                        {% comment %} 
-                                <div class="row gy-30 align-items-center justify-content-center justify-content-between fadeinup wow mb-40 mt-40">
-                                    <div class="col-lg-auto">
-                                        <h3 class="page-title mb-0">Floor Plan</h3>
-                                    </div>
-                                    <div class="col-lg-auto">
-                                        <ul class="nav nav-tabs property-tab mb-0" role="tablist">
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link active" id="floor-tab1" data-bs-toggle="tab" data-bs-target="#floor-tab1-pane" type="button" role="tab" aria-controls="floor-tab1-pane" aria-selected="true">First Floor</button>
-                                            </li>
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="floor-tab2" data-bs-toggle="tab" data-bs-target="#floor-tab2-pane" type="button" role="tab" aria-controls="floor-tab2-pane" aria-selected="false">Second Floor</button>
-                                            </li>
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="floor-tab3" data-bs-toggle="tab" data-bs-target="#floor-tab3-pane" type="button" role="tab" aria-controls="floor-tab3-pane" aria-selected="false">Third Floor</button>
-                                            </li>
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="floor-tab4" data-bs-toggle="tab" data-bs-target="#floor-tab4-pane" type="button" role="tab" aria-controls="floor-tab4-pane" aria-selected="false">Top Garden </button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="tab-content">
-                                    <div class="tab-pane fade show active" id="floor-tab1-pane" role="tabpanel" aria-labelledby="floor-tab1" tabindex="0">
-                                        <div class="property-grid-plan fadeinup wow">
-                                            <div class="property-grid-thumb">
-                                                <img src="assets/img/property-details/property__plan_1.jpg" alt="img">
+                                {% else %}
+                                    <p>No features available for this property.</p>
+                                {% endif %}
+                                       
+                                {% if property.map_embed_url %}
+                                    <h3 class="page-title mt-50 mb-30 fadeinup wow">Location</h3>
+                                    <div class="location-map fadeinup wow">
+                                        <div class="contact-map">
+                                            <iframe src="{{ property.map_embed_url }}" allowfullscreen="" loading="lazy"></iframe>
+                                        </div>
+                                        <div class="location-map-address">
+                                            <div class="thumb">
+                                                <img src="{{ property.images.first.image.url }}" alt="img">
                                             </div>
-                                            <div class="property-grid-details">
-                                                <h4 class="property-grid-title">First Floor </h4>
-                                                <p class="property-grid-text mb-25">Doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Dolorem ipsum quia dolor sit amet, </p>
-                                                <p class="text-desc">consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore.</p>
+                                            <div class="media-body">
+                                                <h4 class="title">Address:</h4>
+                                                <p class="text">{{ property.address }}</p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade fadeinup wow" id="floor-tab2-pane" role="tabpanel" aria-labelledby="floor-tab2" tabindex="0">
-                                        <div class="property-grid-plan">
-                                            <div class="property-grid-thumb">
-                                                <img src="assets/img/property-details/property__plan_1.jpg" alt="img">
-                                            </div>
-                                            <div class="property-grid-details">
-                                                <h4 class="property-grid-title">Second Floor </h4>
-                                                <p class="property-grid-text mb-25">Doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Dolorem ipsum quia dolor sit amet, </p>
-                                                <p class="text-desc">consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="floor-tab3-pane" role="tabpanel" aria-labelledby="floor-tab3" tabindex="0">
-                                        <div class="property-grid-plan">
-                                            <div class="property-grid-thumb">
-                                                <img src="assets/img/property-details/property__plan_1.jpg" alt="img">
-                                            </div>
-                                            <div class="property-grid-details">
-                                                <h4 class="property-grid-title">Third Floor </h4>
-                                                <p class="property-grid-text mb-25">Doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Dolorem ipsum quia dolor sit amet, </p>
-                                                <p class="text-desc">consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="floor-tab4-pane" role="tabpanel" aria-labelledby="floor-tab4" tabindex="0">
-                                        <div class="property-grid-plan">
-                                            <div class="property-grid-thumb">
-                                                <img src="assets/img/property-details/property__plan_1.jpg" alt="img">
-                                            </div>
-                                            <div class="property-grid-details">
-                                                <h4 class="property-grid-title">Top Garden </h4>
-                                                <p class="property-grid-text mb-25">Doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Dolorem ipsum quia dolor sit amet, </p>
-                                                <p class="text-desc">consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> {% endcomment %}
-
-                                <h3 class="page-title mt-50 mb-30 fadeinup wow">Location</h3>
-                                <div class="location-map fadeinup wow">
-                                    <div class="contact-map">
-                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3644.7310056272386!2d89.2286059153658!3d24.00527418490799!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39fe9b97badc6151%3A0x30b048c9fb2129bc!2sAngfuztheme!5e0!3m2!1sen!2sbd!4v1651028958211!5m2!1sen!2sbd" allowfullscreen="" loading="lazy"></iframe>
-                                    </div>
-                                    <div class="location-map-address">
-                                        <div class="thumb">
-                                            <img src="{{ property.images.first.image.url }}" alt="img">
-                                        </div>
-                                        <div class="media-body">
-                                            <h4 class="title">Address:</h4>
-                                            <p class="text">{{ property.address }}</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -366,13 +278,13 @@
 
                 <div class="col-xxl-4 col-lg-5">
                     <aside class="sidebar-area">
-                        <div class="widget widget_search  ">
-                            <h3 class="widget_title">search</h3>
-                            <form class="search-form">
-                                <input type="text" placeholder="Enter Keyword">
-                                <button type="submit"><i class="far fa-search"></i></button>
+                         <div class="widget widget_search  ">
+                            <h3 class="widget_title">search</h3>                   
+                            <form method="GET" action="{% url 'property-search' %}" class="search-form">
+                                <input type="text" name="q" placeholder="What are you looking for?" required>
+                                <button type="submit"><i class="fal fa-search"></i></button>
                             </form>
-                        </div>
+                        </div> 
                         <div class="widget  ">
                             <h3 class="widget_title">Featured Listings</h3>
                             <div class="recent-post-wrap featured-listing">
@@ -412,7 +324,7 @@
                                                 </div>
                                             </div>
                                             <div class="recent-post-meta">
-                                                <a href="{% url 'property_detail' property.slug %}">${{ property.price }}</a>
+                                                <a href="{% url 'property_detail' property.slug %}">{{ property.price }} ৳</a>
                                             </div>
                                         </div>
                                     </div>
@@ -421,33 +333,50 @@
                             </div>
                         </div>
                         <div class="widget sidebar-contact-form">
-                            <h3 class="widget_title">Contact Us</h3>
+                            <h3 class="widget_title">Interested To Book?</h3>
                             <div class="contact-form-widget">
-                                <form action="#" class="newsletter-form">
-                                    <div class="form-group">
-                                        <input class="form-control" type="text" placeholder="Your Name" required="">
+                                 {% if messages %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            {{ message }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            
+                                <form method="post" novalidate>
+                                    {% csrf_token %}
+                                    {{ form.non_field_errors }}
+
+                                    <div class="mb-3">
+                                        {{ form.number.label_tag }}  
+                                        {{ form.number }}
+                                        {{ form.number.errors }}
                                     </div>
-                                    <div class="form-group">
-                                        <input class="form-control" type="email" placeholder="Your Email" required="">
-                                    </div>
-                                    <div class="form-group">
-                                        <input class="form-control" type="text" placeholder="Your Phone" required="">
-                                    </div>
-                                    <div class="form-group mb-4">
-                                        <textarea name="Your message" id="message" cols="30" rows="3" class="form-control" placeholder="Your Message"></textarea>
-                                    </div>
-                                    <div class="form-btn pt-2">
-                                        <button type="submit" class="th-btn radius">Send Us</button>
-                                    </div>
+                               
+                                    <button type="submit" class="btn btn-primary">Send </button>
                                 </form>
+
+                            </div>
+                        </div> 
+                        <div class="widget widget_whatsapp">
+                            <div class="widget-content" style="text-align: center; padding: 15px; border: 1px solid #ddd; border-radius: 8px; max-width: 300px; margin: auto;">
+                                <h3 style="margin-bottom: 8px; color: #25D366; font-size: 18px;">
+                                    Contact via WhatsApp
+                                </h3>
+                                <p style="margin-bottom: 12px; font-size: 14px; color: #555;">
+                                    Click below to message us about this property.
+                                </p>
+                                <a href="https://wa.me/8801913222203?text=Hello%20BTP,%20I%20am%20interested%20in%20one%20of%20your%20properties.%0A%0AProperty%20Details:%0A{{ request.build_absolute_uri }}%0A%0APlease%20let%20me%20know%20more%20information."
+                                target="_blank"
+                                style="display: inline-block; background-color: #25D366; color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; font-size: 14px; font-weight: 500;">
+                                Send on WhatsApp
+                                </a>
                             </div>
                         </div>
-                        <div class="widget widget_banner" data-bg-src="{% static 'assets/img/bg/widget_banner.jpg' %}">
-                            <div class="widget-banner">
-                                <h2 class="title">We can help you to find real estate agency</h2>
-                                <a href="contact.html" class="th-btn radius">Contact with Agent</a>
-                            </div>
-                        </div>
+
+
+
                     </aside>
                 </div>
 

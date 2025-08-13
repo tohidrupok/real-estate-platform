@@ -1,0 +1,91 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block body %}
+<!--==============================
+    Breadcrumb
+==============================-->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content text-center">
+            <h1 class="breadcumb-title">Search Results</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>Search</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--==============================
+    Search Result Table
+==============================-->
+<div class="space">
+    <div class="container">
+        <div class="tinv-wishlist woocommerce tinv-wishlist-clear">
+            <div class="tinv-header">
+                <h2 class="mb-30">Properties{% if query %} matching "<span style="background-color: #ff4136; color: white; border: none;">{{ query }}</span>"{% endif %}</h2>
+            </div>
+
+            {% if properties %}
+            <form action="#" method="post" autocomplete="off">
+                <table class="tinvwl-table-manage-list">
+                    <thead>
+                        <tr>
+                            <th class="product-cb"><input type="checkbox" class="global-cb" title="Select all"></th>
+                            <th class="product-remove"></th>
+                            <th class="product-thumbnail">Image</th>
+                            <th class="product-name">Property Name</th>
+                            <th class="product-price">Price</th>
+                            <th class="product-date">Posted On</th>
+                            <th class="product-stock">Status</th>
+                            <th class="product-action">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for prop in properties %}
+                        <tr class="wishlist_item">
+                            <td class="product-cb"><input type="checkbox" name="prop_id" value="{{ prop.id }}"></td>
+                            <td class="product-remove">
+                                <a href="#"><i class="fal fa-times"></i></a>
+                            </td>
+                            <td class="product-thumbnail">
+                                <a href="{% url 'property_detail' prop.slug %}">
+                                    <img src="{{ prop.images.first.image.url }}" alt="Property Image" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail">
+                                </a>
+                            </td>
+                            <td class="product-name">
+                                <a href="{% url 'property_detail' prop.slug %}">{{ prop.name }}</a>
+                                <br><small>{{ prop.address|truncatechars:50 }}</small>
+                            </td>
+                            <td class="product-price">
+                                {{ prop.price }} BDT
+                            </td>
+                            <td class="product-date">
+                                <time class="entry-date">{{ prop.date_posted }}</time>
+                            </td>
+                            <td class="product-stock">
+                                <p class="stock {% if prop.is_active %}in-stock{% else %}out-of-stock{% endif %}">
+                                    <span><i class="fas fa-{{ prop.is_active|yesno:'check,times' }}"></i></span>
+                                    <span class="tinvwl-txt">{{ prop.is_active|yesno:"Active,Inactive" }}</span>
+                                </p>
+                            </td>
+                            <td class="product-action">
+                                <a href="{% url 'property_detail' prop.slug %}" class="button th-btn radius left-icon">
+                                    <i class="fal fa-search"></i><span class="tinvwl-txt">View Details</span>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+            {% else %}
+                <div class="alert alert-warning text-center mt-4">No properties found for your search.</div>
+            {% endif %}
+
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

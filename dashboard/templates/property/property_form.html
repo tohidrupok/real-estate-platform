@@ -81,6 +81,14 @@
                             </div>
 
                             <div class="col-md-6">
+                                <label for="{{ form.unit.id_for_label }}" class="form-label">Total Unit</label>
+                                {{ form.unit }}
+                                {% if form.unit.errors %}
+                                    <div class="text-danger small">{{ form.unit.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
                                 <label for="{{ form.room.id_for_label }}" class="form-label">Total Rooms</label>
                                 {{ form.room }}
                                 {% if form.room.errors %}
@@ -112,19 +120,35 @@
                                 {% endif %}
                             </div>
 
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <label for="{{ form.featured_sqft.id_for_label }}" class="form-label">Featured Sqft</label>
                                 {{ form.featured_sqft }}
                                 {% if form.featured_sqft.errors %}
                                     <div class="text-danger small">{{ form.featured_sqft.errors.as_text|striptags }}</div>
                                 {% endif %}
-                            </div>
+                            </div> -->
 
                             <div class="col-md-6">
                                 <label for="{{ form.built_in.id_for_label }}" class="form-label">Built Year</label>
                                 {{ form.built_in }}
                                 {% if form.built_in.errors %}
                                     <div class="text-danger small">{{ form.built_in.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="{{ form.latitude.id_for_label }}" class="form-label">Latitude</label>
+                                {{ form.latitude }}
+                                {% if form.latitude.errors %}
+                                    <div class="text-danger small">{{ form.latitude.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.longitude.id_for_label }}" class="form-label">Longitude</label>
+                                {{ form.longitude }}
+                                {% if form.longitude.errors %}
+                                    <div class="text-danger small">{{ form.longitude.errors.as_text|striptags }}</div>
                                 {% endif %}
                             </div>
 
@@ -212,6 +236,51 @@
                                     {% endif %}
                                 </div>
                             </div>
+                            
+                            <div class="col-md-6">
+                                <label for="{{ form.status.id_for_label }}" class="form-label">Status</label>
+                                {{ form.status }}
+                                {% if form.status.errors %}
+                                    <div class="text-danger small">{{ form.status.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div> 
+                            <div class="col-md-12">
+                            <div class="col-md-12">
+                                <label class="form-label">Features & Amenities</label>
+                                <div class="row">
+                                    {% for checkbox in form.features %}
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                {{ checkbox.tag }}
+                                                <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                                    {{ checkbox.choice_label }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+
+                                
+                                </div>
+                                {% if form.features.errors %}
+                                    <div class="text-danger small">{{ form.features.errors.as_text|striptags }}</div>
+                                {% endif %}
+                            </div>
+
+                            {% if property.images.all %}
+                                <label class="form-label">Existing Images</label>
+                                <div class="row mb-3">
+                                    {% for image in property.images.all %}
+                                    <div class="col-md-3 position-relative mb-2">
+                                        <img src="{{ image.image.url }}" class="img-thumbnail" style="height:150px;object-fit:cover;">
+                                        <!-- Delete button -->
+                                        <form method="POST" action="{% url 'delete_property_image' image.id %}" style="position:absolute; top:5px; right:5px;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this image?')">&times;</button>
+                                        </form>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
 
                             <!-- Image Upload -->
                             <div class="col-md-12">
@@ -224,6 +293,8 @@
                                 <button type="submit" class="btn btn-primary px-5">Save Property</button>
                                 <a href="{% url 'property_list' %}" class="btn btn-outline-secondary ms-2">Cancel</a>
                             </div>
+
+
                         </div>
                     </form>
 

@@ -3,151 +3,382 @@
 {% block body %}
 
 <style>
-    .card-glass {
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border-radius: 1.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+    /* General Layout */
+    .dashboard-section {
+        background: #f8f9fa;
+        padding: 40px 15px 80px;
+        min-height: 100vh;
     }
 
-    .summary-card {
-        border-radius: 2rem;
-        padding: 2rem;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s ease;
+    /* Summary Cards */
+    .card-metric {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgb(0 0 0 / 0.1);
+        padding: 30px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: default;
+    }
+    .card-metric:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 15px 30px rgb(0 0 0 / 0.15);
+    }
+    .card-metric h2 {
+        font-size: 3rem;
+        margin-bottom: 6px;
+        color: #007bff;
+        font-weight: 700;
+    }
+    .card-metric p {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: #6c757d;
     }
 
-    .summary-card:hover {
-        transform: translateY(-5px);
+    /* Glass Card Style */
+    .glass-card {
+        background: rgba(255,255,255,0.95);
+        backdrop-filter: blur(12px);
+        border-radius: 18px;
+        padding: 30px 25px;
+        box-shadow: 0 12px 25px rgb(0 0 0 / 0.08);
+        margin-bottom: 50px;
     }
 
-    .summary-icon {
-        font-size: 2rem;
-        margin-bottom: 0.5rem;
+    /* Tables */
+    table.dashboard-table th,
+    table.dashboard-table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    /* Buttons */
+    .btn-action {
+        padding: 5px 12px;
+        font-size: 0.9rem;
+        border-radius: 6px;
+    }
+    .btn-outline-primary {
+        transition: all 0.25s ease;
+    }
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: #fff;
+        transform: translateY(-3px);
+    }
+
+    /* Breadcrumb */
+    .breadcumb-wrapper {
+        padding: 70px 0 50px;
+        background-size: cover !important;
+        background-position: center center !important;
+        position: relative;
+        color: #fff;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .breadcumb-content h1 {
+        font-weight: 700;
+        font-size: 3.2rem;
+        margin-bottom: 12px;
+    }
+    .breadcumb-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        font-size: 1rem;
+    }
+    .breadcumb-menu li {
         display: inline-block;
+        margin: 0 6px;
+    }
+    .breadcumb-menu li a {
+        color: #f8f9fa;
+        text-decoration: underline;
     }
 
-    .bg-gradient-success {
-        background: linear-gradient(135deg, #28a745, #6ed36e);
-        color: white;
-    }
-
-    .bg-gradient-primary {
-        background: linear-gradient(135deg, #007bff, #61a7f7);
-        color: white;
+    /* Responsive fixes */
+    @media (max-width: 767.98px) {
+        .card-metric h2 {
+            font-size: 2.2rem;
+        }
+        .breadcumb-content h1 {
+            font-size: 2rem;
+        }
     }
 </style>
 
-<!-- Breadcrumb Section -->
-<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
-    <div class="container">
-        <div class="breadcumb-content text-center">
-            <h1 class="breadcumb-title">Admin Dashboard</h1>
+<!-- Breadcrumb -->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}" style="background-image: url('{% static 'assets/img/bg/breadcrumb-bg.jpg' %}');">
+    <div class="container text-center">
+        <div class="breadcumb-content">
+            <h1>Admin Dashboard</h1>
             <ul class="breadcumb-menu">
                 <li><a href="{% url 'home' %}">Home</a></li>
-                <li>Admin Dashboard</li>
+                <li>Dashboard</li>
             </ul>
         </div>
     </div>
 </div>
 
-<!-- Admin Dashboard Section -->
-<section class="bg-light py-5">
+<!-- Main Dashboard Section -->
+<section class="dashboard-section">
     <div class="container">
 
         <!-- Summary Cards -->
-        <div class="row g-4 mb-5 justify-content-center">
-            <div class="col-md-5 col-lg-4">
-                <div class="summary-card bg-gradient-success text-center">
-                    <div class="summary-icon">🏠</div>
-                    <h5>Total Properties</h5>
-                    <h2 class="fw-bold">{{ total_properties }}</h2>
+        <div class="row justify-content-center g-4 mb-5">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card-metric shadow-sm">
+                    <h2>{{ total_properties }}</h2>
+                    <p>Total Properties 🏠</p>
                 </div>
             </div>
-            <div class="col-md-5 col-lg-4">
-                <div class="summary-card bg-gradient-primary text-center">
-                    <div class="summary-icon">👨‍💼</div>
-                    <h5>Total Managers</h5>
-                    <h2 class="fw-bold">{{ total_managers }}</h2>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card-metric shadow-sm">
+                    <h2>{{ total_managers }}</h2>
+                    <p>Total Managers 👨‍💼</p>
                 </div>
             </div>
-        </div>
-
-        <!-- Create Manager Form -->
-        <div class="row justify-content-center mb-5">
-            <div class="col-lg-8">
-                <div class="card-glass p-5 shadow-lg">
-                    <h2 class="mb-4 text-primary text-center">👑 Welcome, Admin</h2>
-                    <p class="mb-4 text-muted text-center">Use this dashboard to create and manage managers.</p>
-
-                    <h5 class="text-dark mb-3 text-center">➕ Create New Manager</h5>
-
-                    <form method="post" class="mb-4">
-                        {% csrf_token %}
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <input type="text" name="username" class="form-control" placeholder="Manager Username" required>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="password" name="password" class="form-control" placeholder="Password" required>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-success mt-4 w-100">Create Manager</button>
-                    </form>
-
-                    {% if success %}
-                        <div class="alert alert-success text-center">{{ success }}</div>
-                    {% endif %}
-                    {% if error %}
-                        <div class="alert alert-danger text-center">{{ error }}</div>
-                    {% endif %}
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card-metric shadow-sm">
+                    <h2>{{ lands|length }}</h2>
+                    <p>Submitted Lands 🌍</p>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card-metric shadow-sm">
+                    <h2>{{ land_bookings|length }}</h2>
+                    <p>Land Bookings 📜</p>
                 </div>
             </div>
         </div>
 
-        <!-- Manager List -->
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <div class="card-glass p-5 shadow-sm">
-                    <h4 class="mb-4 text-center text-dark">👥 Existing Managers</h4>
+        <!-- Quick Access Buttons -->
+        <div class="glass-card mb-5">
+            <h4 class="text-center mb-4 fw-bold">🔧 Admin Quick Access</h4>
+            <div class="row g-3">
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-primary w-100 py-3 shadow-sm">🧭 Dashboard</a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <a href="{% url 'property_list' %}" class="btn btn-outline-primary w-100 py-3 shadow-sm">🏠 Property List</a>
+                </div>
+                
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <a href="{% url 'jomi_list' %}" class="btn btn-outline-primary w-100 py-3 shadow-sm">
+                        🗺️ Land List
+                    </a>
+                </div>
 
-                    <div class="table-responsive">
-                        <table class="table table-bordered align-middle text-center bg-white rounded-4">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Username</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for manager in managers %}
-                                <tr>
-                                    <td>{{ manager.username }}</td>
-                                    <td>
-                                        <form method="post" action="{% url 'delete_manager' manager.id %}" class="d-inline">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this manager?')">
-                                                🗑️ Delete
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                {% empty %}
-                                <tr>
-                                    <td colspan="2" class="text-muted">No managers found.</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <a href="{% url 'admin-service_list' %}" class="btn btn-outline-primary w-100 py-3 shadow-sm">
+                        🛠️ Service
+                    </a>
+                </div>
 
-                    <div class="text-center mt-4">
-                        <a href="{% url 'logout' %}" class="btn btn-outline-secondary">🔓 Logout</a>
-                    </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <a href="{% url 'team_member_list' %}" class="btn btn-outline-primary w-100 py-3 shadow-sm">👥 Employee List</a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <a href="{% url 'upload_video' %}" class="btn btn-outline-primary w-100 py-3 shadow-sm">🎞️ Theme Video</a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <a href="{% url 'land_list' %}" class="btn btn-outline-primary w-100 py-3 shadow-sm">🌍 Submitted Lands</a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <a href="{% url 'interior_dashboard' %}" class="btn btn-outline-primary w-100 py-3 shadow-sm">🛋️ Interior Manage</a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <a href="{% url 'testimonial_dashboard' %}" class="btn btn-outline-primary w-100 py-3 shadow-sm">💬 Testimonial Manage</a>
                 </div>
             </div>
         </div>
+
+        <!-- Submitted Lands Table -->
+        <div class="glass-card">
+            <h4 class="mb-4 text-center fw-bold">🌍 Submitted Lands</h4>
+            {% if lands %}
+            <div class="table-responsive">
+                <table class="table table-striped align-middle dashboard-table">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Title</th>
+                            <th>City</th>
+                            <th>District</th>
+                            <th>Area Size</th>
+                            <th>Posted On</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for land in lands %}
+                        <tr>
+                            <td>{{ land.title }}</td>
+                            <td>{{ land.city }}</td>
+                            <td>{{ land.district }}</td>
+                            <td>{{ land.area_size }}</td>
+                            <td>{{ land.posted_on|date:"Y-m-d" }}</td>
+                            <td>
+                                <a href="{% url 'land_detail' land.pk %}" class="btn btn-sm btn-info me-1">Details</a>
+                                <a href="{% url 'land_delete' land.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-center text-muted fst-italic">No lands found at the moment.</p>
+            {% endif %}
+        </div>
+
+        <!-- Land Booking Requests Table -->
+        <div class="glass-card mt-5">
+            <h4 class="mb-4 text-center fw-bold">📜 Land Booking Requests</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover dashboard-table">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Contact Number</th>
+                            <th>Customer Name</th>
+                            <th>Email</th>
+                            <th>Land Location</th>
+                            <th>Land Size</th>
+                            <th>Booking Date</th>
+                            <th>Notes</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in land_bookings %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ booking.contact_number }}</td>
+                            <td>{{ booking.customer_name|default:"-" }}</td>
+                            <td>{{ booking.email|default:"-" }}</td>
+                            <td>{{ booking.land_location|default:"-" }}</td>
+                            <td>{{ booking.land_size|default:"-" }}</td>
+                            <td>{{ booking.booking_date|date:"d M Y" }}</td>
+                            <td>{{ booking.notes|default:"-" }}</td>
+                            <td>
+                                <form method="post" action="{% url 'delete_land_booking' booking.id %}" onsubmit="return confirm('Are you sure to delete this booking?');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-danger btn-action">🗑️</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="9" class="text-center text-muted fst-italic">No bookings found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Contact Messages Table -->
+        <div class="glass-card mt-5">
+            <h4 class="mb-4 text-center fw-bold">📬 Contact Messages</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered dashboard-table text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Subject</th>
+                            <th>Message</th>
+                            <th>Time</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for msg in contact_messages %}
+                        <tr>
+                            <td>{{ msg.name }}</td>
+                            <td>{{ msg.number }}</td>
+                            <td>{{ msg.email }}</td>
+                            <td>{{ msg.subject }}</td>
+                            <td>{{ msg.message|truncatechars:50 }}</td>
+                            <td>{{ msg.created_at|date:"M d, Y H:i" }}</td>
+                            <td>
+                                <form method="post" action="{% url 'delete_contact_message' msg.id %}" onsubmit="return confirm('Delete this message?');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-danger btn-action">🗑️</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-muted fst-italic">No contact messages found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Manager Creation Form -->
+        <div class="glass-card mt-5">
+            <h4 class="mb-3 text-center fw-bold">➕ Create New Manager</h4>
+            <form method="post" class="row g-3 justify-content-center">
+                {% csrf_token %}
+                <div class="col-12 col-md-5">
+                    <input type="text" name="username" class="form-control form-control-lg" placeholder="Manager Username" required>
+                </div>
+                <div class="col-12 col-md-5">
+                    <input type="password" name="password" class="form-control form-control-lg" placeholder="Password" required>
+                </div>
+                <div class="col-12 col-md-2 d-grid">
+                    <button type="submit" class="btn btn-success btn-lg">Create</button>
+                </div>
+            </form>
+
+            {% if success %}
+                <div class="alert alert-success mt-4 text-center fw-semibold">{{ success }}</div>
+            {% endif %}
+            {% if error %}
+                <div class="alert alert-danger mt-4 text-center fw-semibold">{{ error }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Existing Managers Table -->
+        <div class="glass-card mt-5">
+            <h4 class="mb-3 text-center fw-bold">👥 Existing Managers</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered dashboard-table text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Username</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for manager in managers %}
+                        <tr>
+                            <td>{{ manager.username }}</td>
+                            <td>
+                                <form method="post" action="{% url 'delete_manager' manager.id %}" onsubmit="return confirm('Delete this manager?');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-danger btn-action">🗑️ Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="2" class="text-muted fst-italic">No managers found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center mt-4">
+                <a href="{% url 'logout' %}" class="btn btn-outline-secondary">🔓 Logout</a>
+            </div>
+        </div>
+
     </div>
 </section>
 

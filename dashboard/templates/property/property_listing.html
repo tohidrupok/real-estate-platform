@@ -34,7 +34,7 @@ Blog Area
                                 <a class="active" href="#" id="tab-shop-list" data-bs-toggle="tab" data-bs-target="#tab-list" role="tab" aria-controls="tab-grid" aria-selected="false"><i class="fa-solid fa-list"></i></a>
                                 <a href="#" id="tab-shop-grid" data-bs-toggle="tab" data-bs-target="#tab-grid" role="tab" aria-controls="tab-grid" aria-selected="true"> <i class="fa-light fa-grid-2"></i></a>
                             </div>
-                            <form class="woocommerce-ordering" method="get">
+                            {% comment %} <form class="woocommerce-ordering" method="get">
                                 <select name="orderby" class="orderby" aria-label="Shop order">
                                     <option value="menu_order" selected="selected">Default Sorting</option>
                                     <option value="popularity">Sort by popularity</option>
@@ -43,7 +43,7 @@ Blog Area
                                     <option value="price">Sort by price: low to high</option>
                                     <option value="price-desc">Sort by price: high to low</option>
                                 </select>
-                            </form>
+                            </form> {% endcomment %}
                         </div>
                     </div>
                 </div>
@@ -125,8 +125,10 @@ Blog Area
                                     </ul>
 
                                     <div class="property-bottom">
-                                        <h6 class="box-title">৳ {{ property.price }}</h6>
-                                        <a class="th-btn sm style3 pill" href="{% url 'property_detail' property.slug %}">View More</a>
+                                    {% if property.price is not None %}
+                                           <h6 class="box-title">{{ property.price|floatformat:2 }} ৳</h6>
+                                     {% endif %}                       
+                                    <a class="th-btn sm style3 pill" href="{% url 'property_detail' property.slug %}">View More</a>
                                     </div>
                                 </div>
                             </div>
@@ -213,7 +215,7 @@ Blog Area
 
                                             <div class="popular-badge">
                                                 <img src="{% static 'assets/img/icon/sell_rent_icon.svg' %}" alt="icon">
-                                                <p>{{ property.purpose }}</p>
+                                                <p>{{ property.get_status_display }}</p>
                                             </div>
                                         </div>
 
@@ -248,7 +250,9 @@ Blog Area
                                             </ul>
 
                                             <div class="property-bottom">
-                                                <h6 class="box-title">৳ {{ property.price }}</h6>
+                                                {% if property.price is not None %}
+                                                    <h6 class="box-title">{{ property.price|floatformat:2 }} ৳</h6>
+                                                {% endif %}    
                                                 <a class="th-btn sm style3 pill" href="{% url 'property_detail' property.slug %}">View More</a>
                                             </div>
                                         </div>
@@ -292,11 +296,13 @@ Blog Area
                             <aside class="sidebar-area">
                                 <div class="widget widget_search  ">
                                     <h3 class="widget_title">search</h3>
-                                    <form class="search-form">
-                                        <input type="text" placeholder="Enter Keyword">
-                                        <button type="submit"><i class="far fa-search"></i></button>
+                                    
+                                    
+                                    <form method="GET" action="{% url 'property-search' %}" class="search-form">
+                                        <input type="text" name="q" placeholder="What are you looking for?" required>
+                                        <button type="submit"><i class="fal fa-search"></i></button>
                                     </form>
-                                </div>
+                                </div> 
 
 
                                 <div class="widget">
@@ -357,23 +363,41 @@ Blog Area
                                 <div class="widget sidebar-contact-form">
                                     <h3 class="widget_title">Contact Us</h3>
                                     <div class="contact-form-widget">
-                                        <form action="#" class="newsletter-form">
-                                            <div class="form-group">
-                                                <input class="form-control" type="text" placeholder="Your Name" required="">
+                                            {% for message in messages %}
+                                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                        {{ message }}
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                    </div>
+                                            {% endfor %}
+                                        
+                                            <form class="newsletter-form"  method="post" action="">
+                                            {% csrf_token %}
+
+                                            <div class="mb-3">
+                                                {{ form.name }}
+                                                {{ form.name.errors }}
                                             </div>
-                                            <div class="form-group">
-                                                <input class="form-control" type="email" placeholder="Your Email" required="">
+                                            <div class="mb-3">
+                                                {{ form.number }}
+                                                {{ form.number.errors }}
                                             </div>
-                                            <div class="form-group">
-                                                <input class="form-control" type="text" placeholder="Your Phone" required="">
+                                            <div class="mb-3">
+                                                {{ form.email }}
+                                                {{ form.email.errors }}
                                             </div>
-                                            <div class="form-group mb-4">
-                                                <textarea name="Your message" id="message" cols="30" rows="3" class="form-control" placeholder="Your Message"></textarea>
+                                            <div class="mb-3">
+                                                {{ form.subject }}
+                                                {{ form.subject.errors }}
                                             </div>
-                                            <div class="form-btn pt-2">
-                                                <button type="submit" class="th-btn radius">Send Us</button>
+                                            <div class="mb-3">
+                                                {{ form.message }}
+                                                {{ form.message.errors }}
                                             </div>
+
+                                            <button type="submit" class="btn btn-primary">Send Message</button>
                                         </form>
+
+
                                     </div>
                                 </div>
                                 

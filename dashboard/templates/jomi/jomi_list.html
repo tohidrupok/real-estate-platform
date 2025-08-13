@@ -1,0 +1,86 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<!--==============================
+    Breadcumb
+==============================-->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content text-center text-white">
+            <h1 class="breadcumb-title">All land(jomi)</h1>
+            <ul class="breadcumb-menu list-inline">
+                <li class="list-inline-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                <li class="list-inline-item">land List</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--==============================
+    Property List Section
+==============================-->
+<section class="bg-light py-5" data-bg-src="{% static 'assets/img/shape/error-shape-bg.png' %}">
+    <div class="container">
+
+        <!-- Header Row -->
+        <div class="row justify-content-between align-items-center mb-4">
+            <div class="col-md-8">
+                <h2 class="fw-bold mb-0">Land(Jomi) List</h2>
+                <p class="text-muted">Manage all your land listings from here</p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <a href="{% url 'jomi_create' %}" class="btn btn-primary shadow-sm">
+                    <i class="fas fa-plus-circle me-1"></i> Create New Land(Jomi)
+                </a>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Title</th>
+                            <th>City</th>
+                            <th>District</th>
+                            <th>Price</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for jomi in jomis %}
+                        <tr>
+                            <td class="fw-semibold">{{ jomi.title }}</td>
+                            <td>{{ jomi.city }}</td>
+                            <td>{{ jomi.district }}</td>
+                            <td>{{ jomi.price|default:"-" }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'jomi_edit' jomi.pk %}" class="btn btn-sm btn-warning me-1">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form method="post" action="{% url 'jomi_delete' jomi.pk %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">
+                                <i class="fas fa-info-circle me-1"></i> No Jomi found.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

@@ -12,7 +12,7 @@
             <div class="breadcumb-content">
                 <h1 class="breadcumb-title">Contact</h1>
                 <ul class="breadcumb-menu">
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="{% url 'home' %}">Home</a></li>
                     <li>Contact with Us</li>
                 </ul>
             </div>
@@ -66,41 +66,56 @@ Contact Area
         <div class="container">
             <div class="row gx-0">
                 <div class="col-xl-12">
-                    <div class="contact-all-wrapper">
+                    <div class="contact-all-wrapper">                     
                         <div class="contact-form-wrap">
-                            <form action="mail.php" method="POST" class="contact-form ajax-contact">
-                                <h3 class="form-title">Do you have questions? Contact Us</h3>
-                                <div class="row">
-                                    <div class="form-group col-md-6">
-                                        <input type="text" class="form-control" name="name" id="name" placeholder="Name *">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <input type="tel" class="form-control" name="number" id="number" placeholder="Phone *">
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <input type="email" class="form-control" name="email" id="email" placeholder="Email Address *">
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <select name="subject" id="subject" class="orderby">
-                                            <option value="" disabled="" selected="" hidden="">Select Subject</option>
-                                            <option value="Apartment">Apartment</option>
-                                            <option value="House">House</option>
-                                            <option value="Villa">Villa</option>
-                                            <option value="Land">Land</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-12">
-                                        <textarea name="Your Messsage*" id="message" cols="30" rows="3" class="form-control" placeholder="Your Message *"></textarea>
-                                    </div>
-                                    <div class="form-btn text-start col-12">
-                                        <button class="th-btn radius">Send message</button>
-                                    </div>
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            {{ message }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            
+                            <form method="post" novalidate>
+                                {% csrf_token %}
+                                {{ form.non_field_errors }}
+
+                                <div class="mb-3">
+                                    {{ form.name.label_tag }}  
+                                    {{ form.name }}
+                                    {{ form.name.errors }}
                                 </div>
-                                <p class="form-messages mb-0 mt-3"></p>
+
+                                <div class="mb-3">
+                                    {{ form.number.label_tag }}  
+                                    {{ form.number }}
+                                    {{ form.number.errors }}
+                                </div>
+
+                                <div class="mb-3">
+                                    {{ form.email.label_tag }}  
+                                    {{ form.email }}
+                                    {{ form.email.errors }}
+                                </div>
+
+                                <div class="mb-3">
+                                    {{ form.subject.label_tag }}  
+                                    {{ form.subject }}
+                                    {{ form.subject.errors }}
+                                </div>
+
+                                <div class="mb-3">
+                                    {{ form.message.label_tag }}  
+                                    {{ form.message }}
+                                    {{ form.message.errors }}
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Send Message</button>
                             </form>
-                        </div>
+                        </div> 
                         <div class="contact-form-thumb overflow-hidden">
-                            <img src="{% static 'assets/img/contact/contact-page-thumb.jpg' %}" alt="img">
+                            <img src="{% static 'assets/img/bg/contact-page-thumb.jpg' %}" alt="img">
 
                         </div>
                     </div>
@@ -112,8 +127,8 @@ Map Area
 ==============================-->
     <div class="space-top">
         <div class="container-fluid p-0">
-            <div class="contact-map">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3644.7310056272386!2d89.2286059153658!3d24.00527418490799!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39fe9b97badc6151%3A0x30b048c9fb2129bc!2sAngfuztheme!5e0!3m2!1sen!2sbd!4v1651028958211!5m2!1sen!2sbd" allowfullscreen="" loading="lazy"></iframe>
+            <div class="contact-map"> 
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d812.8976406889884!2d90.3643677685766!3d23.826172891065166!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755bf07c79768dd%3A0x6884b1a8795c497c!2sSustainable%20Engineering%20Solutions%20Ltd!5e0!3m2!1sen!2sbd!4v1753872632946!5m2!1sen!2sbd" allowfullscreen="" loading="lazy"></iframe>
                 <div class="contact-icon">
                     <img src="{% static 'assets/img/icon/con-location-dot.svg' %}" alt="img">
                 </div>

@@ -1,0 +1,101 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<!-- Breadcumb -->
+<div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
+    <div class="container">
+        <div class="breadcumb-content text-center">
+            <h1 class="breadcumb-title">
+                {% if form.instance.pk %}Update{% else %}Create{% endif %} Land Listing
+            </h1>
+            <ul class="breadcumb-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>{% if form.instance.pk %}Update{% else %}Create{% endif %} Land</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Land Form -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-lg rounded-4 border-0 p-4">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        <div class="row g-4">
+
+                            {% for field in form.visible_fields %}
+                                {% if field.name == 'sqft' %}
+                                    <div class="col-md-6">
+                                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                        <div class="input-group">
+                                            {{ field }}
+                                            <span class="input-group-text">sqft</span>
+                                        </div>
+                                        {% if field.help_text %}
+                                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                                        {% endif %}
+                                        {% if field.errors %}
+                                            <div class="text-danger small mt-1">{{ field.errors.as_text|striptags }}</div>
+                                        {% endif %}
+                                    </div>
+                                {% elif field.field.widget.input_type == "checkbox" %}
+                                    <div class="col-md-6 d-flex align-items-center">
+                                        <div class="form-check">
+                                            {{ field }}
+                                            <label class="form-check-label ms-2" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                            {% if field.errors %}
+                                                <div class="text-danger small">{{ field.errors.as_text|striptags }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="col-md-6">
+                                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                        {{ field }}
+                                        {% if field.help_text %}
+                                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                                        {% endif %}
+                                        {% if field.errors %}
+                                            <div class="text-danger small mt-1">{{ field.errors.as_text|striptags }}</div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
+
+                            <div class="col-12 text-center mt-4">
+                                <button type="submit" class="btn btn-danger px-5">
+                                    {% if form.instance.pk %}Update{% else %}Submit{% endif %} Land
+                                </button>
+                                <a href="{% url 'sell_land' %}" class="btn btn-outline-secondary ms-3">Cancel</a>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

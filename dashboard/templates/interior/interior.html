@@ -2,9 +2,6 @@
 {% load static %}
 {% block body %}
 
-<!-- Bootstrap + Font Awesome Requirements -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
 <!-- Breadcrumb -->
 <div class="breadcumb-wrapper" data-bg-src="{% static 'assets/img/bg/breadcrumb-bg.jpg' %}">
     <div class="container">
@@ -54,32 +51,99 @@
 
         <hr>
 
-        <!-- Design Items -->
-        <div>
+        <section class="popular-sec-1 space">
+        <div class="container">
+            <div class="row justify-content-center">
+            <div class="col-xl-7">
+                <div class="title-area text-center mb-2">
+                <p class="sub-title fadeinup wow" data-wow-duration="1.2s" data-wow-delay="0.1s">
+                    <span class="double-line"></span> Popular Properties
+                </p>
+                <h2 class="sec-title mb-4 fadeinup wow" data-wow-duration="1.3s" data-wow-delay="0.3s">Best Properties Sale</h2>
+                </div>
+            </div>
+            </div>
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2>Design Items</h2>
                 <a class="btn btn-success btn-sm" href="{% url 'design_create' %}">
                     <i class="fas fa-plus"></i> Add Design
                 </a>
-            </div>
+            </div> 
+            <div class="row gy-30 justify-content-center filter-active">
+            {% for property in designs %}
+            <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-6 filter-item cat3 cat1">
+                <div class="popular-list-1">
+                <div class="thumb-wrapper">
+                    <div class="th-slider" data-slider-options='{"loop":false, "autoplay": false,"autoHeight": true, "effect":"fade"}'>
+                    <div class="swiper-wrapper">
+                        {% for image in property.images.all %}
+                        <div class="swiper-slide">
+                        <a class="popular-popup-image" href="{{ image.image.url }}">
+                            <img src="{{ image.image.url }}" alt="Image" style="width: 100%; height: 300px; object-fit: cover; border-radius: 8px;">
+                        </a>
+                        </div>
+                        {% empty %}
+                        <div class="swiper-slide">
+                        <img src="{% static 'assets/img/no-image.jpg' %}" alt="No image">
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="icon-wrap">
+                        <button class="slider-arrow slider-prev"><i class="far fa-arrow-left"></i></button>
+                        <button class="slider-arrow slider-next"><i class="far fa-arrow-right"></i></button>
+                    </div>
+                    </div>
 
-            {% if designs %}
-                <div class="row">
-                    {% for design in designs %}
-                        <div class="col-md-6 col-lg-4 mb-4">
-                            <div class="card bg-white shadow-sm h-100 border-0 hover-shadow">
-                                {% if design.image %}
-                                    <img src="{{ design.image.url }}" class="card-img-top" alt="{{ design.name }}" style="height: 200px; object-fit: cover;">
-                                {% endif %}
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ design.name }}</h5>
-                                    <p class="mb-1"><strong>Category:</strong> {{ design.category.name }}</p>
-                                    <p class="card-text text-truncate" style="max-height: 60px; overflow: hidden;">
-                                        {{ design.description }}
-                                    </p>
-                                </div>
-                                <div class="card-footer text-end">
-                                    <a href="{% url 'design_edit' design.pk %}" class="btn btn-outline-primary btn-sm me-1">
+                    <div class="actions">
+                    <a href="#" class="icon-btn"><i class="fas fa-heart"></i></a>
+                    </div>
+
+                    <div class="actions-style-2-wrapper">
+                    <div class="actions style-2">
+                        <a href="#" class="icon-btn">
+                        <span class="action-text">Add To Favorite</span>
+                        <i class="fa-solid fa-bookmark"></i>
+                        </a>
+                        {% if property.images.first %}
+                        <a href="{{ property.images.first.image.url }}" class="icon-btn popular-popup-image">
+                        <span class="action-text">View all img</span>
+                        <i class="fa-solid fa-camera"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                    </div>
+
+                    <div class="popular-badge">
+                    <img src="{% static 'assets/img/icon/sell_rent_icon.svg' %}" alt="icon">
+                    <p>{{ property.status }}</p>
+                    </div>
+                </div>
+
+                <div class="property-content">
+                    <div class="media-body">
+                    <h5 class="box-title">
+                        <a href="">
+                        {{ property.name|truncatechars:20 }}
+                        </a>
+                    </h5>
+                    <div class="box-text">
+                        <div class="icon">
+                        <img src="{% static 'assets/img/icon/popular-location.svg' %}" alt="icon">
+                        </div>
+                        {{ property.category|default:"N/A"|truncatechars:38 }}
+                    </div>
+                    </div>
+
+                    <ul class="property-featured">
+                    <li>
+                        <div class="icon"><img src="{% static 'assets/img/icon/bed.svg' %}" alt="icon"></div>
+                        Category {{ property.category }}
+                    </li>
+                    
+                    </ul>
+                   <div class="property-bottom">
+                                        <div class="card-footer text-end">
+                                    <a href="{% url 'design_edit' property.pk %}" class="btn btn-outline-primary btn-sm me-1">
                                         <i class="fas fa-edit"></i>
                                     </a>
 
@@ -87,11 +151,8 @@
                                     <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ design.pk }}">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Modal -->
+                                </div> 
+                                <!-- Modal -->
                         <div class="modal fade" id="deleteModal{{ design.pk }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ design.pk }}" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -103,7 +164,7 @@
                                 Are you sure you want to delete <strong>{{ design.name }}</strong>?
                               </div>
                               <div class="modal-footer">
-                                <form method="post" action="{% url 'design_delete' design.pk %}">
+                                <form method="post" action="{% url 'design_delete' property.pk %}">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-danger">Yes, Delete</button>
                                 </form>
@@ -111,27 +172,20 @@
                               </div>
                             </div>
                           </div>
-                        </div>
-                    {% endfor %}
+                        </div> 
+
+                    </div>
                 </div>
-            {% else %}
-                <div class="alert alert-info">No design items found.</div>
-            {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            </div>
         </div>
+        </section>
+
 
     </div>
 </section>
 
-<!-- Bootstrap JS for modal functionality -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Optional: Card hover effect -->
-<style>
-.hover-shadow:hover {
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
-    transform: translateY(-5px);
-    transition: 0.3s ease;
-}
-</style>
 
 {% endblock %}
